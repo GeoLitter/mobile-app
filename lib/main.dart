@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       "Explore and protect earth!",
                       style: GoogleFonts.openSans(
                           textStyle: TextStyle(
-                              color: Colors.white,
+                              color: Colors.white70,
                               fontSize: 18,
                               fontWeight: FontWeight.bold)),
                     ),
