@@ -42,14 +42,35 @@ class _MyHomePageState extends State<MyHomePage> {
       // ),
       body: Column(
         children: <Widget>[
-          Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: Image(
-                  image: AssetImage("assets/logo_transparent.png"),
-                  width: 90,
-                  height: 90,
-                  fit: BoxFit.scaleDown,
-                  alignment: FractionalOffset.center)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: IconButton(
+                  alignment: Alignment.topCenter,
+                  icon: Icon(Icons.camera_alt_outlined, color: Colors.black54),
+                  onPressed: () {},
+                ),
+              ),
+              Padding(
+                  padding: const EdgeInsets.only(top: 40),
+                  child: Image(
+                      image: AssetImage("assets/logo_transparent.png"),
+                      width: 90,
+                      height: 90,
+                      fit: BoxFit.scaleDown,
+                      alignment: FractionalOffset.center)),
+              Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: IconButton(
+                  alignment: Alignment.topCenter,
+                  icon: Icon(Icons.settings, color: Colors.black54),
+                  onPressed: () {},
+                ),
+              )
+            ],
+          ),
           SizedBox(
             height: 20,
           ),
@@ -62,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Explore and save earth!",
+                      "Explore and protect earth!",
                       style: GoogleFonts.openSans(
                           textStyle: TextStyle(
                               color: Colors.white,
@@ -73,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 4,
                     ),
                     Text(
-                      "Home",
+                      "Share what you see!",
                       style: GoogleFonts.openSans(
                           textStyle: TextStyle(
                               color: lightBackground,
@@ -84,9 +105,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 IconButton(
                   alignment: Alignment.topCenter,
-                  icon: Image.asset(
-                    "assets/notification.png",
-                    width: 24,
+                  icon: Icon(
+                    Icons.notification_important_outlined,
+                    color: lightBackground,
                   ),
                   onPressed: () {},
                 )

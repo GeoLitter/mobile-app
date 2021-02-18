@@ -5,37 +5,37 @@ import 'package:google_fonts/google_fonts.dart';
 class GridDashboard extends StatelessWidget {
   Items item1 = new Items(
       title: "Explore",
-      subtitle: "March, Wednesday",
+      subtitle: "Observations",
       event: "3 Events",
       img: "assets/logo_transparent.png");
 
   Items item2 = new Items(
-    title: "Statistics",
-    subtitle: "Bocali, Apple",
+    title: "Community",
+    subtitle: "Meet other people",
     event: "4 Items",
     img: "assets/logo_transparent.png",
   );
   Items item3 = new Items(
-    title: "Profiles",
-    subtitle: "Lucy Mao going to Office",
+    title: "Statistics",
+    subtitle: "Our Achievements",
     event: "",
     img: "assets/logo_transparent.png",
   );
   Items item4 = new Items(
-    title: "Activity",
-    subtitle: "See latest post near you",
+    title: "News",
+    subtitle: "Learn about earth",
     event: "",
     img: "assets/logo_transparent.png",
   );
   Items item5 = new Items(
-    title: "Unresovled",
-    subtitle: "Assist resolve cases",
+    title: "Settings",
+    subtitle: "Customize your profile",
     event: "4 Items",
     img: "assets/logo_transparent.png",
   );
   Items item6 = new Items(
     title: "Donate",
-    subtitle: "",
+    subtitle: "Non-profit!",
     event: "2 Items",
     img: "assets/logo_transparent.png",
   );
