@@ -37,13 +37,21 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: AppBar(
-        title: Center(child: Text(widget.title)),
-      ),
+      // appBar: AppBar(
+      //   title: Center(child: Text(widget.title)),
+      // ),
       body: Column(
         children: <Widget>[
+          Padding(
+              padding: const EdgeInsets.only(top: 40),
+              child: Image(
+                  image: AssetImage("assets/logo_transparent.png"),
+                  width: 90,
+                  height: 90,
+                  fit: BoxFit.scaleDown,
+                  alignment: FractionalOffset.center)),
           SizedBox(
-            height: 40,
+            height: 20,
           ),
           Padding(
             padding: EdgeInsets.only(left: 16, right: 16),

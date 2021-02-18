@@ -1,3 +1,4 @@
+import 'package:Ecocrypt/ui/constants/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -6,43 +7,42 @@ class GridDashboard extends StatelessWidget {
       title: "Explore",
       subtitle: "March, Wednesday",
       event: "3 Events",
-      img: "assets/calendar.png");
+      img: "assets/logo_transparent.png");
 
   Items item2 = new Items(
     title: "Statistics",
     subtitle: "Bocali, Apple",
     event: "4 Items",
-    img: "assets/food.png",
+    img: "assets/logo_transparent.png",
   );
   Items item3 = new Items(
     title: "Profiles",
     subtitle: "Lucy Mao going to Office",
     event: "",
-    img: "assets/map.png",
+    img: "assets/logo_transparent.png",
   );
   Items item4 = new Items(
     title: "Activity",
     subtitle: "See latest post near you",
     event: "",
-    img: "assets/festival.png",
+    img: "assets/logo_transparent.png",
   );
   Items item5 = new Items(
     title: "Unresovled",
     subtitle: "Assist resolve cases",
     event: "4 Items",
-    img: "assets/todo.png",
+    img: "assets/logo_transparent.png",
   );
   Items item6 = new Items(
     title: "Donate",
     subtitle: "",
     event: "2 Items",
-    img: "assets/setting.png",
+    img: "assets/logo_transparent.png",
   );
 
   @override
   Widget build(BuildContext context) {
     List<Items> myList = [item1, item2, item3, item4, item5, item6];
-    var color = 0xff453658;
     return Flexible(
       child: GridView.count(
           childAspectRatio: 1.0,
@@ -53,7 +53,8 @@ class GridDashboard extends StatelessWidget {
           children: myList.map((data) {
             return Container(
               decoration: BoxDecoration(
-                  color: Color(color), borderRadius: BorderRadius.circular(10)),
+                  color: lightBackground,
+                  borderRadius: BorderRadius.circular(10)),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
