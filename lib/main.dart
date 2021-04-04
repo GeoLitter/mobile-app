@@ -1,5 +1,6 @@
 import 'package:Ecocrypt/griddashboard.dart';
 import 'package:Ecocrypt/ui/constants/theme_colors.dart';
+import 'package:Ecocrypt/ui/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: primaryColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Ecocrypt.org'),
+      home: Home(),
     );
   }
 }
