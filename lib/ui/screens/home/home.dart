@@ -71,10 +71,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         ],
       ));
 
-  Widget get middleSection => Expanded(
+  Widget middleSection(_tabController, context) => Expanded(
         child: Container(
-          child:
+          child: TabBarView(
+            controller: _tabController,
+            children: [
               Stack(children: <Widget>[VideoDescription(), ActionsToolbar()]),
+              Stack(children: <Widget>[VideoDescription(), ActionsToolbar()]),
+              Stack(children: <Widget>[VideoDescription(), ActionsToolbar()])
+            ],
+          ),
         ),
       );
 
@@ -91,7 +97,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           topSection(_tabController, context),
 
           // Middle expanded
-          middleSection,
+          middleSection(_tabController, context),
 
           // Bottom Section
           BottomToolbar(),
