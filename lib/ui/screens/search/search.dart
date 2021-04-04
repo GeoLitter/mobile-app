@@ -15,7 +15,7 @@ class _SearchState extends State<Search> {
   List names = new List();
   List filteredNames = new List();
   Icon _searchIcon = new Icon(Icons.search);
-  Widget _appBarTitle = new Text('Search Example');
+  Widget _appBarTitle = new Text('Search');
 
   _SearchState() {
     _filter.addListener(() {

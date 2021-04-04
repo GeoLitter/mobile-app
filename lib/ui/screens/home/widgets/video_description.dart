@@ -8,7 +8,8 @@ class VideoDescription extends StatelessWidget {
             padding: EdgeInsets.all(20),
             child: Column(children: <Widget>[
               Expanded(
-                  child: Image.network('https://picsum.photos/250?image=9')),
+                  child: Image.network(
+                      'https://cdnuploads.aa.com.tr/uploads/Contents/2020/10/21/thumbs_b_c_4e2b5da8e850d2e9a123ffd51a0fb3a0.jpg?v=141529')),
               Container(
                 height: 60,
                 child: Column(
