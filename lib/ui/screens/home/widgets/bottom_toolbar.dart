@@ -1,3 +1,4 @@
+import 'package:Ecocrypt/ui/screens/search/search.dart';
 import 'package:flutter/material.dart';
 
 class BottomToolbar extends StatelessWidget {
@@ -39,9 +40,15 @@ class BottomToolbar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Icon(
-          Icons.home,
-          color: Colors.white,
+        InkWell(
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Search()));
+          },
+          child: Icon(
+            Icons.home,
+            color: Colors.white,
+          ),
         ),
         Icon(Icons.search, color: Colors.white),
         customCreateIcon,
