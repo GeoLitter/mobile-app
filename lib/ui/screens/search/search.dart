@@ -88,7 +88,7 @@ class _SearchState extends State<Search> {
         );
       } else {
         this._searchIcon = new Icon(Icons.search);
-        this._appBarTitle = new Text('Search Example');
+        this._appBarTitle = new Text('Search');
         filteredNames = names;
         _filter.clear();
       }

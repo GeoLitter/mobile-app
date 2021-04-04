@@ -8,59 +8,66 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
-  Widget get topNav => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: IconButton(
-              alignment: Alignment.topCenter,
-              icon: Icon(Icons.map, color: Colors.black54),
-              onPressed: () {},
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+  TabController _tabController;
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 2, vsync: this);
+    super.initState();
+  }
+
+  Widget topNav() => Container(
+        margin: EdgeInsets.only(top: 35),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: IconButton(
+                alignment: Alignment.topCenter,
+                icon: Icon(Icons.map, color: Colors.black54),
+                onPressed: () {},
+              ),
             ),
-          ),
-          Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: Image(
-                  image: AssetImage("assets/logo_transparent.png"),
-                  width: 90,
-                  height: 90,
-                  fit: BoxFit.scaleDown,
-                  alignment: FractionalOffset.center)),
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: IconButton(
-              alignment: Alignment.topCenter,
-              icon: Icon(Icons.settings, color: Colors.black54),
-              onPressed: () {},
-            ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: IconButton(
+                alignment: Alignment.topCenter,
+                icon: Icon(Icons.settings, color: Colors.black54),
+                onPressed: () {},
+              ),
+            )
+          ],
+        ),
       );
 
-  Widget get topSection => Container(
-        height: 80.0,
-        padding: EdgeInsets.only(bottom: 15.0),
-        alignment: Alignment(0.0, 1.0),
-        child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text(
-                'Following',
-                style: TextStyle(color: Colors.white),
-              ),
-              Container(
-                width: 15.0,
-              ),
-              Text('For you',
-                  style: TextStyle(
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white))
-            ]),
-      );
+  Widget topSection(_tabController, context) => Container(
+      height: 50.0,
+      width: 200,
+      padding: EdgeInsets.only(bottom: 15.0),
+      alignment: Alignment(0.0, 1.0),
+      child: TabBar(
+        controller: _tabController,
+        // give the indicator a decoration (color and border radius)
+        indicator: BoxDecoration(
+          border: Border(
+              bottom: BorderSide(width: 2.0, color: Colors.lightGreenAccent)),
+        ),
+        labelColor: Colors.lightGreenAccent,
+        unselectedLabelColor: Colors.black54,
+        tabs: [
+          // first tab [you can add an icon using the icon property]
+          Tab(
+            text: 'Following',
+          ),
+
+          // second tab [you can add an icon using the icon property]
+          Tab(
+            text: 'Near you',
+          ),
+        ],
+      ));
 
   Widget get middleSection => Expanded(
       child: Row(
@@ -76,9 +83,9 @@ class _HomeState extends State<Home> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           //Top Nav
-          topNav,
+          topNav(),
           // Top section
-          topSection,
+          topSection(_tabController, context),
 
           // Middle expanded
           middleSection,
