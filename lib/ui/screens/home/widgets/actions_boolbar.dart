@@ -20,15 +20,19 @@ class ActionsToolbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 100.0,
-      child: Column(mainAxisSize: MainAxisSize.min, children: [
-        _getFollowAction(),
-        _getSocialAction(icon: Icons.favorite, title: '3.2m'),
-        _getSocialAction(icon: Icons.chat_bubble, title: '16.4k'),
-        _getSocialAction(icon: Icons.share, title: 'Share', isShare: true),
-        _getMusicPlayerAction()
-      ]),
+    return Positioned(
+      bottom: 0,
+      right: 0,
+      child: Container(
+        width: 100.0,
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          _getFollowAction(),
+          _getSocialAction(icon: Icons.favorite, title: '3.2m'),
+          _getSocialAction(icon: Icons.chat_bubble, title: '16.4k'),
+          _getSocialAction(icon: Icons.share, title: 'Share', isShare: true),
+          _getMusicPlayerAction()
+        ]),
+      ),
     );
   }
 

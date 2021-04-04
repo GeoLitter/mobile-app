@@ -5,31 +5,38 @@ class VideoDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: Container(
-            height: 100.0,
-            padding: EdgeInsets.only(left: 20.0),
-            child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    '@firstjonny',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
-                  Text(
-                    'Video title and some other stuff',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Row(children: [
-                    Icon(
-                      Icons.music_note,
-                      size: 15.0,
-                      color: Colors.white,
+            padding: EdgeInsets.all(20),
+            child: Column(children: <Widget>[
+              Expanded(
+                  child: Image.network('https://picsum.photos/250?image=9')),
+              Container(
+                height: 60,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '@firstjonny',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
                     ),
-                    Text('Artist name - Album name - song',
-                        style: TextStyle(fontSize: 12.0, color: Colors.white))
-                  ]),
-                ])));
+                    Text(
+                      'Video title and some other stuff',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Row(children: [
+                      Icon(
+                        Icons.music_note,
+                        size: 15.0,
+                        color: Colors.white,
+                      ),
+                      Text('Artist name - Album name - song',
+                          style: TextStyle(fontSize: 12.0, color: Colors.white))
+                    ]),
+                  ],
+                ),
+              )
+            ])));
   }
 }

@@ -13,7 +13,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
@@ -44,9 +44,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   Widget topSection(_tabController, context) => Container(
       height: 50.0,
-      width: 200,
-      padding: EdgeInsets.only(bottom: 15.0),
-      alignment: Alignment(0.0, 1.0),
+      width: 300,
+      alignment: Alignment(0.0, 0.0),
       child: TabBar(
         controller: _tabController,
         // give the indicator a decoration (color and border radius)
@@ -59,10 +58,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         tabs: [
           // first tab [you can add an icon using the icon property]
           Tab(
-            text: 'Following',
+            text: 'Reports',
           ),
 
           // second tab [you can add an icon using the icon property]
+          Tab(
+            text: 'Issues',
+          ),
           Tab(
             text: 'Near you',
           ),
@@ -70,17 +72,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       ));
 
   Widget get middleSection => Expanded(
-      child: Row(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[VideoDescription(), ActionsToolbar()]));
+        child: Container(
+          child:
+              Stack(children: <Widget>[VideoDescription(), ActionsToolbar()]),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.lightGreen,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           //Top Nav
           topNav(),
