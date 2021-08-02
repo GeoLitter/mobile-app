@@ -1,10 +1,12 @@
+import 'package:ecocrypt/data/services/secure_storage_service.dart';
 import 'package:flutter/material.dart';
 
 class AuthViewModel extends ChangeNotifier {
+  final SecureLocalStorage _secureLocalStorage = SecureLocalStorage();
   var _userName;
   var _email;
   var _password;
-  bool isAuthenticated;
+  bool isAuthenticated = false;
   bool isLoginLoading;
   bool isSignUpLoading;
 
@@ -30,5 +32,16 @@ class AuthViewModel extends ChangeNotifier {
     _userName = username;
     _password = password;
     //make request and notify
+  }
+
+  Future<void> updateAuthStatus() async {
+    //user data exists
+    if (await _secureLocalStorage.readSecureData('userId') != null ||
+        await _secureLocalStorage.readSecureData('refresh_token') != null) {
+      isAuthenticated = true;
+      notifyListeners();
+    }
+    isAuthenticated = false;
+    notifyListeners();
   }
 }
