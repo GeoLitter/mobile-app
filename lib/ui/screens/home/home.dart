@@ -58,7 +58,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         tabs: [
           // first tab [you can add an icon using the icon property]
           Tab(
-            text: 'Reports',
+            text: 'Trending',
           ),
 
           // second tab [you can add an icon using the icon property]
