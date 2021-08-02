@@ -1,5 +1,6 @@
 import 'package:ecocrypt/griddashboard.dart';
 import 'package:ecocrypt/ui/constants/theme_colors.dart';
+import 'package:ecocrypt/ui/screens/auth/welcome.dart';
 import 'package:ecocrypt/ui/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: primaryColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Home(),
+      home: WelcomePage(),
     );
   }
 }
