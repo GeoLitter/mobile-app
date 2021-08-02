@@ -33,6 +33,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
 
+  #for local data encryption
+  flutter_secure_storage: ^3.3.5
+
 dev_dependencies:
   #used to change app icon
   flutter_launcher_icons: ^0.8.1
