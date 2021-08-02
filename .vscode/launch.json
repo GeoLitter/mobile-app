@@ -3,7 +3,7 @@
   "configurations": [
   
     {
-      "name": "Betta Pay Dev",
+      "name": "Ecocrypt Dev",
       "request": "launch",
       "type": "dart",
       "args": [
@@ -14,7 +14,7 @@
       ]
     },
     {
-      "name": "Betta Pay Prod",
+      "name": "Ecocrypt Prod",
       "request": "launch",
       "type": "dart",
       "args": [

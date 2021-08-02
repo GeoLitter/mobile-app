@@ -1,5 +1,5 @@
-import 'package:Ecocrypt/ui/screens/profiles/user_profile.dart';
-import 'package:Ecocrypt/ui/screens/search/search.dart';
+import 'package:ecocrypt/ui/screens/profiles/user_profile.dart';
+import 'package:ecocrypt/ui/screens/search/search.dart';
 import 'package:flutter/material.dart';
 
 class BottomToolbar extends StatelessWidget {

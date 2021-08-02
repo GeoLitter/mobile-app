@@ -1,6 +1,6 @@
-import 'package:Ecocrypt/griddashboard.dart';
-import 'package:Ecocrypt/ui/constants/theme_colors.dart';
-import 'package:Ecocrypt/ui/screens/home/home.dart';
+import 'package:ecocrypt/griddashboard.dart';
+import 'package:ecocrypt/ui/constants/theme_colors.dart';
+import 'package:ecocrypt/ui/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

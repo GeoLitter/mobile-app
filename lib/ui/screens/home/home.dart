@@ -1,6 +1,6 @@
-import 'package:Ecocrypt/ui/screens/home/widgets/actions_boolbar.dart';
-import 'package:Ecocrypt/ui/screens/home/widgets/bottom_toolbar.dart';
-import 'package:Ecocrypt/ui/screens/home/widgets/video_description.dart';
+import 'package:ecocrypt/ui/screens/home/widgets/actions_boolbar.dart';
+import 'package:ecocrypt/ui/screens/home/widgets/bottom_toolbar.dart';
+import 'package:ecocrypt/ui/screens/home/widgets/video_description.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
