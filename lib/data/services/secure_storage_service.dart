@@ -3,12 +3,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecureLocalStorage {
   static final _storage = FlutterSecureStorage();
+  static final _authViewModel = AuthViewModel();
 
   Future writeSecureData(String key, String value) async {
     var writeData = await _storage.write(key: key, value: value);
     //when this function runs, update auth status
     //it should keep the user logged in
-    await AuthViewModel().updateAuthStatus();
+    await _authViewModel.updateAuthStatus();
     return writeData;
   }
 
@@ -21,7 +22,7 @@ class SecureLocalStorage {
     var deleteData = await _storage.delete(key: key);
     //when this function runs, update auth status
     //it should log the user out
-    await AuthViewModel().updateAuthStatus();
+    await _authViewModel.updateAuthStatus();
     return deleteData;
   }
 }
