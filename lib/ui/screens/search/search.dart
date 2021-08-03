@@ -12,10 +12,10 @@ class _SearchState extends State<Search> {
   final TextEditingController _filter = new TextEditingController();
   final dio = new Dio();
   String _searchText = "";
-  List names = new List();
-  List filteredNames = new List();
+  List names = [];
+  List filteredNames = [];
   Icon _searchIcon = new Icon(Icons.search);
-  Widget _appBarTitle = new Text('Search Example');
+  Widget _appBarTitle = new Text('Search');
 
   _SearchState() {
     _filter.addListener(() {
@@ -55,8 +55,8 @@ class _SearchState extends State<Search> {
   }
 
   Widget _buildList() {
-    if (!(_searchText.isEmpty)) {
-      List tempList = new List();
+    if ((_searchText.isNotEmpty)) {
+      List tempList = [];
       for (int i = 0; i < filteredNames.length; i++) {
         if (filteredNames[i]['name']
             .toLowerCase()
@@ -78,6 +78,7 @@ class _SearchState extends State<Search> {
   }
 
   void _searchPressed() {
+    // _getNames();
     setState(() {
       if (this._searchIcon.icon == Icons.search) {
         this._searchIcon = new Icon(Icons.close);
@@ -95,17 +96,17 @@ class _SearchState extends State<Search> {
     });
   }
 
-  void _getNames() async {
-    final response = await dio.get('https://swapi.co/api/people');
-    print(response);
-    List tempList = new List();
-    for (int i = 0; i < response.data['results'].length; i++) {
-      tempList.add(response.data['results'][i]);
-    }
-    setState(() {
-      names = tempList;
-      names.shuffle();
-      filteredNames = names;
-    });
-  }
+  // void _getNames() async {
+  //   final response = await dio.get('https://swapi.co/api/people');
+  //   print(response);
+  //   List tempList = [];
+  //   for (int i = 0; i < response.data['results'].length; i++) {
+  //     tempList.add(response.data['results'][i]);
+  //   }
+  //   setState(() {
+  //     names = tempList;
+  //     names.shuffle();
+  //     filteredNames = names;
+  //   });
+  // }
 }

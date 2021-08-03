@@ -1,6 +1,6 @@
-import 'package:Ecocrypt/ui/screens/home/widgets/actions_boolbar.dart';
-import 'package:Ecocrypt/ui/screens/home/widgets/bottom_toolbar.dart';
-import 'package:Ecocrypt/ui/screens/home/widgets/video_description.dart';
+import 'package:ecocrypt/ui/screens/home/widgets/actions_boolbar.dart';
+import 'package:ecocrypt/ui/screens/home/widgets/bottom_toolbar.dart';
+import 'package:ecocrypt/ui/screens/home/widgets/video_description.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -58,7 +58,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         tabs: [
           // first tab [you can add an icon using the icon property]
           Tab(
-            text: 'Reports',
+            text: 'Trending',
           ),
 
           // second tab [you can add an icon using the icon property]
@@ -71,10 +71,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         ],
       ));
 
-  Widget get middleSection => Expanded(
+  Widget middleSection(_tabController, context) => Expanded(
         child: Container(
-          child:
+          child: TabBarView(
+            controller: _tabController,
+            children: [
               Stack(children: <Widget>[VideoDescription(), ActionsToolbar()]),
+              Stack(children: <Widget>[VideoDescription(), ActionsToolbar()]),
+              Stack(children: <Widget>[VideoDescription(), ActionsToolbar()])
+            ],
+          ),
         ),
       );
 
@@ -91,7 +97,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           topSection(_tabController, context),
 
           // Middle expanded
-          middleSection,
+          middleSection(_tabController, context),
 
           // Bottom Section
           BottomToolbar(),

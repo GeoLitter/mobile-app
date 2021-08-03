@@ -1,4 +1,5 @@
-import 'package:Ecocrypt/ui/screens/search/search.dart';
+import 'package:ecocrypt/ui/screens/profiles/user_profile.dart';
+import 'package:ecocrypt/ui/screens/search/search.dart';
 import 'package:flutter/material.dart';
 
 class BottomToolbar extends StatelessWidget {
@@ -53,7 +54,12 @@ class BottomToolbar extends StatelessWidget {
         Icon(Icons.search, color: Colors.white),
         customCreateIcon,
         Icon(Icons.message, color: Colors.white),
-        Icon(Icons.person, color: Colors.white)
+        InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => UserProfile()));
+            },
+            child: Icon(Icons.person, color: Colors.white))
       ],
     );
   }
