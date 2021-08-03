@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:ecocrypt/data/services/secure_storage_service.dart';
 import 'package:flutter/material.dart';
 
 class AuthViewModel extends ChangeNotifier {
   final SecureLocalStorage _secureLocalStorage = SecureLocalStorage();
-
+  final dio = new Dio();
   final passwordController = TextEditingController();
   final emailController = TextEditingController();
   var _userName;
@@ -43,10 +44,12 @@ class AuthViewModel extends ChangeNotifier {
 
   Future loginUser() async {
     isLoginLoading = true;
-
-    sleep(Duration(seconds: 1));
-    print("hello");
+    notifyListeners();
+    final response =
+        await dio.get('https://jsonplaceholder.typicode.com/todos/1');
+    print(response);
     isLoginLoading = false;
+    notifyListeners();
     //make request and notify
   }
 

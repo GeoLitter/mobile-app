@@ -61,8 +61,8 @@ class _SignInState extends State<SignIn> {
               end: Alignment.centerRight,
               colors: [primaryColor, backgroundColor])),
       child: InkWell(
-          onTap: () {
-            authViewModel.loginUser();
+          onTap: () async {
+            await authViewModel.loginUser();
           },
           child: authViewModel.isLoginLoading
               ? Text(
