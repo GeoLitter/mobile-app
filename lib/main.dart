@@ -1,11 +1,16 @@
 import 'package:ecocrypt/griddashboard.dart';
+import 'package:ecocrypt/providers/AuthViewModel.dart';
 import 'package:ecocrypt/ui/constants/theme_colors.dart';
+import 'package:ecocrypt/ui/screens/AuthWrapper.dart';
 import 'package:ecocrypt/ui/screens/auth/welcome.dart';
 import 'package:ecocrypt/ui/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 void main() {
+  Provider.debugCheckInvalidValueType = null;
+
   runApp(MyApp());
 }
 
@@ -13,14 +18,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'EcoCrypt',
-      color: lightBackground,
-      theme: ThemeData(
-        primarySwatch: primaryColor,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AuthViewModel>(create: (_) => AuthViewModel())
+      ],
+      child: MaterialApp(
+        title: 'EcoCrypt',
+        color: lightBackground,
+        theme: ThemeData(
+          primarySwatch: primaryColor,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: AuthWrapper(),
       ),
-      home: WelcomePage(),
     );
   }
 }

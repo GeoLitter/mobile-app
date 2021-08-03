@@ -1,7 +1,9 @@
+import 'package:ecocrypt/providers/AuthViewModel.dart';
 import 'package:ecocrypt/ui/constants/theme_colors.dart';
 import 'package:ecocrypt/ui/screens/auth/widgets/bezierContainer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class SignIn extends StatefulWidget {
   SignIn({Key key, this.title}) : super(key: key);
@@ -13,6 +15,11 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -34,31 +41,8 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  Widget _entryField(String title, {bool isPassword = false}) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          TextField(
-              obscureText: isPassword,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  fillColor: Color(0xfff3f3f4),
-                  filled: true))
-        ],
-      ),
-    );
-  }
-
   Widget _submitButton() {
+    final authViewModel = Provider.of<AuthViewModel>(context, listen: true);
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.symmetric(vertical: 15),
@@ -76,10 +60,19 @@ class _SignInState extends State<SignIn> {
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               colors: [primaryColor, backgroundColor])),
-      child: Text(
-        'Login',
-        style: TextStyle(fontSize: 20, color: Colors.white),
-      ),
+      child: InkWell(
+          onTap: () {
+            authViewModel.loginUser();
+          },
+          child: authViewModel.isLoginLoading
+              ? Text(
+                  'loading...',
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                )
+              : Text(
+                  'Login',
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                )),
     );
   }
 
@@ -221,15 +214,59 @@ class _SignInState extends State<SignIn> {
   }
 
   Widget _emailPasswordWidget() {
-    return Column(
-      children: <Widget>[
-        _entryField("Email id"),
-        _entryField("Password", isPassword: true),
-      ],
-    );
+    final authViewModel = Provider.of<AuthViewModel>(context, listen: true);
+    return Column(children: <Widget>[
+      Container(
+        margin: EdgeInsets.symmetric(vertical: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "Email",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextField(
+                controller: authViewModel.emailController,
+                onChanged: (text) {
+                  authViewModel.setEmail();
+                },
+                obscureText: false,
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    fillColor: Color(0xfff3f3f4),
+                    filled: true))
+          ],
+        ),
+      ),
+      Container(
+        margin: EdgeInsets.symmetric(vertical: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "Password",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextField(
+                controller: authViewModel.passwordController,
+                onChanged: authViewModel.setPassword(),
+                obscureText: true,
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    fillColor: Color(0xfff3f3f4),
+                    filled: true))
+          ],
+        ),
+      )
+    ]);
   }
 
-  @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -257,7 +294,7 @@ class _SignInState extends State<SignIn> {
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     alignment: Alignment.centerRight,
-                    child: Text('Forgot Password ?',
+                    child: Text('Forgot Password?',
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.w500)),
                   ),
