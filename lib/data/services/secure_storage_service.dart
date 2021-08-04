@@ -10,6 +10,7 @@ class SecureLocalStorage {
     //when this function runs, update auth status
     //it should keep the user logged in
     await _authViewModel.updateAuthStatus();
+    print("Auth status: ${_authViewModel.isAuthenticated}");
     return writeData;
   }
 
