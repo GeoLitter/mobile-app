@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:ecocrypt/data/api_client.dart';
+import 'package:ecocrypt/data/services/secure_storage_service.dart';
 
 class AuthRepo {
   ApiService _apiService;
+  final SecureLocalStorage _secureLocalStorage = SecureLocalStorage();
   String _baseUrl = "https://polar-atoll-65466.herokuapp.com";
 
   AuthRepo() {
@@ -18,6 +20,29 @@ class AuthRepo {
     } catch (e) {
       //return network exceptions and errors
       print("error: $e");
+      throw e;
+    }
+  }
+
+  Future loginUser(String email, String password) async {
+    try {
+      final response = await _apiService.post('/login', data: {
+        "email": email,
+        "password": password,
+        // "fcmToken": await _secureLocalStorage.readSecureData("fcmToken")
+      });
+      if (response != null) {
+        //save access token and refresk token
+        await _secureLocalStorage.writeSecureData(
+            'token', response['data']['token']['token']);
+        await _secureLocalStorage.writeSecureData(
+            'refresh_token', response['data']['refreshToken']['token']);
+        //save user id
+        // await _secureLocalStorage.writeSecureData(
+        //     'userId', response['data']['account']['id']);
+        return response;
+      }
+    } catch (e) {
       throw e;
     }
   }
