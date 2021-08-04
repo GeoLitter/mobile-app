@@ -51,4 +51,35 @@ class ApiService {
       throw e;
     }
   }
+
+  Future<dynamic> post(
+    String uri, {
+    data,
+    Map<String, dynamic> queryParameters,
+    Options options,
+    CancelToken cancelToken,
+    ProgressCallback onSendProgress,
+    ProgressCallback onReceiveProgress,
+  }) async {
+    try {
+      var response = await _dio.post(
+        uri,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      );
+      //add as interceoptor instead
+      // if(response.statusCode == 401 && _secureLocalStorage.readSecureData('refresh_token') != null){
+      //    await onRefreshToken();
+      // }
+      return response.data;
+    } on FormatException catch (_) {
+      throw FormatException("Unable to process the data");
+    } catch (e) {
+      throw e;
+    }
+  }
 }
