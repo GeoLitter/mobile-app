@@ -4,12 +4,19 @@ import 'package:ecocrypt/ui/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AuthWrapper extends StatelessWidget {
+class AuthWrapper extends StatefulWidget {
   const AuthWrapper({Key key}) : super(key: key);
+
+  @override
+  _AuthWrapperState createState() => _AuthWrapperState();
+}
+
+class _AuthWrapperState extends State<AuthWrapper> {
   @override
   Widget build(BuildContext context) {
-    return Provider.of<AuthViewModel>(context).isAuthenticated
-        ? Home()
-        : WelcomePage();
+    final authViewModel = Provider.of<AuthViewModel>(context, listen: true);
+    print(authViewModel.isAuthenticated);
+    //todo: fix bug where screen is not being re-rendered
+    return authViewModel.isAuthenticated ? Home() : WelcomePage();
   }
 }

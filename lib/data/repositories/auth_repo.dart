@@ -34,15 +34,16 @@ class AuthRepo {
       if (response != null) {
         //save access token and refresk token
         await _secureLocalStorage.writeSecureData(
-            'token', response['data']['token']['token']);
+            'token', response['token']['token']);
         await _secureLocalStorage.writeSecureData(
-            'refresh_token', response['data']['refreshToken']['token']);
+            'refresh_token', response['refreshToken']['token']);
         //save user id
         // await _secureLocalStorage.writeSecureData(
         //     'userId', response['data']['account']['id']);
         return response;
       }
     } catch (e) {
+      print("Error from Repo: $e");
       throw e;
     }
   }
