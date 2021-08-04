@@ -1,31 +1,30 @@
 import 'dart:async';
-import 'dart:io';
-
-import 'package:dio/dio.dart';
+import 'package:ecocrypt/data/repositories/auth_repo.dart';
 import 'package:ecocrypt/data/services/secure_storage_service.dart';
 import 'package:flutter/material.dart';
 
 class AuthViewModel extends ChangeNotifier {
   final SecureLocalStorage _secureLocalStorage = SecureLocalStorage();
-  final dio = new Dio();
+  final AuthRepo _authRepo = AuthRepo();
   final passwordController = TextEditingController();
   final emailController = TextEditingController();
   var _userName;
   var _email;
   var _password;
   bool isAuthenticated = false;
-  bool isLoginLoading = false;
-  bool isSignUpLoading;
-  get username {
-    return _userName;
-  }
+  bool _isLoginLoading = false;
+  // bool _isSignUpLoading = false;
 
-  get email {
-    return _email;
-  }
+  //getters
+  bool get isLoginLoading => _isLoginLoading;
+  String get username => _userName;
+  String get email => _email;
+  String get password => _password;
 
-  get password {
-    return _password;
+  //setters
+  set setLoginLoading(bool isLoginLoading) {
+    _isLoginLoading = isLoginLoading;
+    notifyListeners();
   }
 
   setEmail() {
@@ -43,12 +42,10 @@ class AuthViewModel extends ChangeNotifier {
   }
 
   Future loginUser() async {
-    isLoginLoading = true;
-    notifyListeners();
-    final response =
-        await dio.get('https://jsonplaceholder.typicode.com/todos/1');
+    setLoginLoading = true;
+    var response = await _authRepo.apiTest();
     print(response);
-    isLoginLoading = false;
+    setLoginLoading = false;
     notifyListeners();
     //make request and notify
   }
