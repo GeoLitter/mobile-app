@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:dio/dio.dart';
 import 'package:ecocrypt/data/repositories/auth_repo.dart';
 import 'package:ecocrypt/data/services/secure_storage_service.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +25,11 @@ class AuthViewModel extends ChangeNotifier {
   //setters
   set setLoginLoading(bool isLoginLoading) {
     _isLoginLoading = isLoginLoading;
+    notifyListeners();
+  }
+
+  set setIsAuthenticated(bool isAuthenticated) {
+    _isAuthenticated = isAuthenticated;
     notifyListeners();
   }
 
@@ -58,12 +62,10 @@ class AuthViewModel extends ChangeNotifier {
     //user data exists
     if (await _secureLocalStorage.readSecureData('token') != null ||
         await _secureLocalStorage.readSecureData('refresh_token') != null) {
-      _isAuthenticated = true;
-      notifyListeners();
+      setIsAuthenticated = true;
       return true;
     }
-    _isAuthenticated = false;
-    notifyListeners();
+    setIsAuthenticated = false;
     return false;
   }
 }
