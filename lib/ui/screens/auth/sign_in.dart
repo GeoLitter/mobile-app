@@ -1,6 +1,7 @@
-import 'package:ecocrypt/providers/AuthViewModel.dart';
 import 'package:ecocrypt/ui/constants/theme_colors.dart';
 import 'package:ecocrypt/ui/screens/auth/widgets/bezierContainer.dart';
+import 'package:ecocrypt/ui/screens/home/home.dart';
+import 'package:ecocrypt/view-models/AuthViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -63,6 +64,10 @@ class _SignInState extends State<SignIn> {
       child: InkWell(
           onTap: () async {
             await authViewModel.loginUser();
+            if (authViewModel.isAuthenticated) {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Home()));
+            }
           },
           child: authViewModel.isLoginLoading
               ? Text(

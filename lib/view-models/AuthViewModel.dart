@@ -54,7 +54,6 @@ class AuthViewModel extends ChangeNotifier {
       print("Error from ViewModel: $e");
     }
     setLoginLoading = false;
-    notifyListeners();
     //make request and notify
   }
 
@@ -67,5 +66,10 @@ class AuthViewModel extends ChangeNotifier {
     }
     setIsAuthenticated = false;
     return false;
+  }
+
+  Future<void> logoutUser() async {
+    await _authRepo.logoutUser();
+    await updateAuthStatus();
   }
 }

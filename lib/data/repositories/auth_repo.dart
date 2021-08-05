@@ -47,4 +47,11 @@ class AuthRepo {
       throw e;
     }
   }
+
+  Future logoutUser() async {
+    //delete tokens - this should logout user
+    //because of provider viewmodel
+    await _secureLocalStorage.deleteSecureData('token');
+    await _secureLocalStorage.deleteSecureData('refresh_token');
+  }
 }
