@@ -1,4 +1,5 @@
 import 'package:ecocrypt/ui/constants/theme_colors.dart';
+import 'package:ecocrypt/ui/screens/auth/sign_up.dart';
 import 'package:ecocrypt/ui/screens/auth/widgets/bezierContainer.dart';
 import 'package:ecocrypt/ui/screens/home/home.dart';
 import 'package:ecocrypt/view-models/AuthViewModel.dart';
@@ -19,6 +20,13 @@ class _SignInState extends State<SignIn> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    AuthViewModel().clearTextFeilds();
+    super.dispose();
   }
 
   Widget _backButton() {
@@ -63,7 +71,7 @@ class _SignInState extends State<SignIn> {
               colors: [primaryColor, backgroundColor])),
       child: InkWell(
           onTap: () async {
-            await authViewModel.loginUser();
+            await authViewModel.loginUser(context);
             if (authViewModel.isAuthenticated) {
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => Home()));
@@ -166,7 +174,7 @@ class _SignInState extends State<SignIn> {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignIn()));
+            context, MaterialPageRoute(builder: (context) => SignUp()));
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 20),
@@ -235,9 +243,7 @@ class _SignInState extends State<SignIn> {
             ),
             TextField(
                 controller: authViewModel.emailController,
-                onChanged: (text) {
-                  authViewModel.setEmail();
-                },
+                onChanged: authViewModel.setEmail(),
                 obscureText: false,
                 decoration: InputDecoration(
                     border: InputBorder.none,

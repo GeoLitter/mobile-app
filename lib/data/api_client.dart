@@ -62,7 +62,7 @@ class ApiService {
     ProgressCallback onReceiveProgress,
   }) async {
     try {
-      var response = await _dio.post(
+      Response response = await _dio.post(
         uri,
         data: data,
         queryParameters: queryParameters,
@@ -75,7 +75,7 @@ class ApiService {
       // if(response.statusCode == 401 && _secureLocalStorage.readSecureData('refresh_token') != null){
       //    await onRefreshToken();
       // }
-      return response.data;
+      return response;
     } on FormatException catch (_) {
       throw FormatException("Unable to process the data");
     } catch (e) {
