@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class AuthViewModel extends ChangeNotifier {
   final SecureLocalStorage _secureLocalStorage = SecureLocalStorage();
   final AuthRepo _authRepo = AuthRepo();
-  final authFormKey = GlobalKey<FormState>();
+  //todo: add form keys without it causing duplicates
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -19,8 +19,6 @@ class AuthViewModel extends ChangeNotifier {
   bool _isAuthenticated = false;
   bool _isLoginLoading = false;
   bool _isRegisterLoading = false;
-  bool _hasUserLoggedOut = false;
-  // bool _isSignUpLoading = false;
 
   //getters
   bool get isLoginLoading => _isLoginLoading;

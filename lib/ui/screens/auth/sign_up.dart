@@ -17,7 +17,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final _formKey = GlobalKey<FormState>();
+  final _signUpFormKey = GlobalKey<FormState>();
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -49,7 +49,7 @@ class _SignUpState extends State<SignUp> {
   Widget _userNameEmailPasswordWidget() {
     final authViewModel = Provider.of<AuthViewModel>(context, listen: true);
     return Form(
-      key: authViewModel.authFormKey,
+      key: _signUpFormKey,
       child: Column(children: <Widget>[
         Container(
           margin: EdgeInsets.symmetric(vertical: 10),
@@ -93,7 +93,7 @@ class _SignUpState extends State<SignUp> {
                   controller: authViewModel.emailController,
                   onChanged: authViewModel.setEmail(),
                   validator: (value) {
-                    return validateUsername(value);
+                    return validateEmail(value);
                   },
                   obscureText: false,
                   decoration: InputDecoration(
@@ -119,7 +119,7 @@ class _SignUpState extends State<SignUp> {
                   controller: authViewModel.passwordController,
                   onChanged: authViewModel.setPassword(),
                   validator: (value) {
-                    return validateUsername(value);
+                    return validatePassword(value);
                   },
                   obscureText: true,
                   decoration: InputDecoration(
@@ -137,7 +137,7 @@ class _SignUpState extends State<SignUp> {
     final authViewModel = Provider.of<AuthViewModel>(context, listen: true);
     return InkWell(
       onTap: () async {
-        if (authViewModel.authFormKey.currentState.validate()) {
+        if (_signUpFormKey.currentState.validate()) {
           await authViewModel.registerUser(context);
         }
         // await authViewModel.apiTest(context);
