@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 class AuthViewModel extends ChangeNotifier {
   final SecureLocalStorage _secureLocalStorage = SecureLocalStorage();
   final AuthRepo _authRepo = AuthRepo();
+  final authFormKey = GlobalKey<FormState>();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();

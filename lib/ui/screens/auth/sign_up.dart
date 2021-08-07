@@ -1,6 +1,7 @@
 import 'package:ecocrypt/ui/constants/theme_colors.dart';
 import 'package:ecocrypt/ui/screens/auth/sign_in.dart';
 import 'package:ecocrypt/ui/screens/auth/widgets/bezierContainer.dart';
+import 'package:ecocrypt/utils/validation/validation.dart';
 import 'package:ecocrypt/view-models/AuthViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,6 +17,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final _formKey = GlobalKey<FormState>();
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -46,84 +48,95 @@ class _SignUpState extends State<SignUp> {
 
   Widget _userNameEmailPasswordWidget() {
     final authViewModel = Provider.of<AuthViewModel>(context, listen: true);
-    return Column(children: <Widget>[
-      Container(
-        margin: EdgeInsets.symmetric(vertical: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "Username",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextField(
-                controller: authViewModel.usernameController,
-                onChanged: authViewModel.setUsername(),
-                obscureText: false,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Color(0xfff3f3f4),
-                    filled: true))
-          ],
+    return Form(
+      key: authViewModel.authFormKey,
+      child: Column(children: <Widget>[
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Username",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                  controller: authViewModel.usernameController,
+                  onChanged: authViewModel.setUsername(),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                  obscureText: false,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Color(0xfff3f3f4),
+                      filled: true))
+            ],
+          ),
         ),
-      ),
-      Container(
-        margin: EdgeInsets.symmetric(vertical: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "Email",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextField(
-                controller: authViewModel.emailController,
-                onChanged: authViewModel.setEmail(),
-                obscureText: false,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Color(0xfff3f3f4),
-                    filled: true))
-          ],
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Email",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                  controller: authViewModel.emailController,
+                  onChanged: authViewModel.setEmail(),
+                  obscureText: false,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Color(0xfff3f3f4),
+                      filled: true))
+            ],
+          ),
         ),
-      ),
-      Container(
-        margin: EdgeInsets.symmetric(vertical: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "Password",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextField(
-                controller: authViewModel.passwordController,
-                onChanged: authViewModel.setPassword(),
-                obscureText: true,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Color(0xfff3f3f4),
-                    filled: true))
-          ],
-        ),
-      )
-    ]);
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Password",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                  controller: authViewModel.passwordController,
+                  onChanged: authViewModel.setPassword(),
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Color(0xfff3f3f4),
+                      filled: true))
+            ],
+          ),
+        )
+      ]),
+    );
   }
 
   Widget _submitButton() {
     final authViewModel = Provider.of<AuthViewModel>(context, listen: true);
     return InkWell(
       onTap: () async {
-        await authViewModel.registerUser(context);
+        if (authViewModel.authFormKey.currentState.validate()) {
+          await authViewModel.registerUser(context);
+        }
         // await authViewModel.apiTest(context);
       },
       child: Container(
