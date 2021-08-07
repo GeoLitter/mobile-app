@@ -67,10 +67,7 @@ class _SignUpState extends State<SignUp> {
                   controller: authViewModel.usernameController,
                   onChanged: authViewModel.setUsername(),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
+                    return validateUsername(value);
                   },
                   obscureText: false,
                   decoration: InputDecoration(
@@ -95,6 +92,9 @@ class _SignUpState extends State<SignUp> {
               TextFormField(
                   controller: authViewModel.emailController,
                   onChanged: authViewModel.setEmail(),
+                  validator: (value) {
+                    return validateUsername(value);
+                  },
                   obscureText: false,
                   decoration: InputDecoration(
                       border: InputBorder.none,
@@ -118,6 +118,9 @@ class _SignUpState extends State<SignUp> {
               TextFormField(
                   controller: authViewModel.passwordController,
                   onChanged: authViewModel.setPassword(),
+                  validator: (value) {
+                    return validateUsername(value);
+                  },
                   obscureText: true,
                   decoration: InputDecoration(
                       border: InputBorder.none,
