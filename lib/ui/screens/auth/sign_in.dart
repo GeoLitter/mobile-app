@@ -1,6 +1,9 @@
-import 'package:ecocrypt/providers/AuthViewModel.dart';
 import 'package:ecocrypt/ui/constants/theme_colors.dart';
+import 'package:ecocrypt/ui/screens/auth/sign_up.dart';
 import 'package:ecocrypt/ui/screens/auth/widgets/bezierContainer.dart';
+import 'package:ecocrypt/ui/screens/home/home.dart';
+import 'package:ecocrypt/utils/validation/validation.dart';
+import 'package:ecocrypt/view-models/AuthViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -15,9 +18,17 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  final _signInFormKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    AuthViewModel().clearTextFeilds();
+    super.dispose();
   }
 
   Widget _backButton() {
@@ -62,7 +73,13 @@ class _SignInState extends State<SignIn> {
               colors: [primaryColor, backgroundColor])),
       child: InkWell(
           onTap: () async {
-            await authViewModel.loginUser();
+            if (_signInFormKey.currentState.validate()) {
+              await authViewModel.loginUser(context);
+              if (authViewModel.isAuthenticated) {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Home()));
+              }
+            }
           },
           child: authViewModel.isLoginLoading
               ? Text(
@@ -161,7 +178,7 @@ class _SignInState extends State<SignIn> {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignIn()));
+            context, MaterialPageRoute(builder: (context) => SignUp()));
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 20),
@@ -215,56 +232,63 @@ class _SignInState extends State<SignIn> {
 
   Widget _emailPasswordWidget() {
     final authViewModel = Provider.of<AuthViewModel>(context, listen: true);
-    return Column(children: <Widget>[
-      Container(
-        margin: EdgeInsets.symmetric(vertical: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "Email",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextField(
-                controller: authViewModel.emailController,
-                onChanged: (text) {
-                  authViewModel.setEmail();
-                },
-                obscureText: false,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Color(0xfff3f3f4),
-                    filled: true))
-          ],
+    return Form(
+      key: _signInFormKey,
+      child: Column(children: <Widget>[
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Email",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                  controller: authViewModel.emailController,
+                  onChanged: authViewModel.setEmail(),
+                  validator: (value) {
+                    return validateEmail(value);
+                  },
+                  obscureText: false,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Color(0xfff3f3f4),
+                      filled: true))
+            ],
+          ),
         ),
-      ),
-      Container(
-        margin: EdgeInsets.symmetric(vertical: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "Password",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextField(
-                controller: authViewModel.passwordController,
-                onChanged: authViewModel.setPassword(),
-                obscureText: true,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Color(0xfff3f3f4),
-                    filled: true))
-          ],
-        ),
-      )
-    ]);
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Password",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                  controller: authViewModel.passwordController,
+                  onChanged: authViewModel.setPassword(),
+                  validator: (value) {
+                    return validatePassword(value);
+                  },
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Color(0xfff3f3f4),
+                      filled: true))
+            ],
+          ),
+        )
+      ]),
+    );
   }
 
   Widget build(BuildContext context) {

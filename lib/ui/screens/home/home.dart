@@ -92,9 +92,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           //Top Nav
-          topNav(),
+          // topNav(),
           // Top section
-          topSection(_tabController, context),
+          // topSection(_tabController, context),
 
           // Middle expanded
           middleSection(_tabController, context),

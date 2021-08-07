@@ -1,8 +1,11 @@
 import 'package:ecocrypt/ui/constants/theme_colors.dart';
 import 'package:ecocrypt/ui/screens/auth/sign_in.dart';
 import 'package:ecocrypt/ui/screens/auth/widgets/bezierContainer.dart';
+import 'package:ecocrypt/utils/validation/validation.dart';
+import 'package:ecocrypt/view-models/AuthViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class SignUp extends StatefulWidget {
   SignUp({Key key, this.title}) : super(key: key);
@@ -14,6 +17,14 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final _signUpFormKey = GlobalKey<FormState>();
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    AuthViewModel().clearTextFeilds();
+    super.dispose();
+  }
+
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -35,51 +46,128 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget _entryField(String title, {bool isPassword = false}) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+  Widget _userNameEmailPasswordWidget() {
+    final authViewModel = Provider.of<AuthViewModel>(context, listen: true);
+    return Form(
+      key: _signUpFormKey,
+      child: Column(children: <Widget>[
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Username",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                  controller: authViewModel.usernameController,
+                  onChanged: authViewModel.setUsername(),
+                  validator: (value) {
+                    return validateUsername(value);
+                  },
+                  obscureText: false,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Color(0xfff3f3f4),
+                      filled: true))
+            ],
           ),
-          SizedBox(
-            height: 10,
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Email",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                  controller: authViewModel.emailController,
+                  onChanged: authViewModel.setEmail(),
+                  validator: (value) {
+                    return validateEmail(value);
+                  },
+                  obscureText: false,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Color(0xfff3f3f4),
+                      filled: true))
+            ],
           ),
-          TextField(
-              obscureText: isPassword,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  fillColor: Color(0xfff3f3f4),
-                  filled: true))
-        ],
-      ),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Password",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                  controller: authViewModel.passwordController,
+                  onChanged: authViewModel.setPassword(),
+                  validator: (value) {
+                    return validatePassword(value);
+                  },
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Color(0xfff3f3f4),
+                      filled: true))
+            ],
+          ),
+        )
+      ]),
     );
   }
 
   Widget _submitButton() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(vertical: 15),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Colors.grey.shade200,
-                offset: Offset(2, 4),
-                blurRadius: 5,
-                spreadRadius: 2)
-          ],
-          gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [primaryColor, backgroundColor])),
-      child: Text(
-        'Register Now',
-        style: TextStyle(fontSize: 20, color: Colors.white),
+    final authViewModel = Provider.of<AuthViewModel>(context, listen: true);
+    return InkWell(
+      onTap: () async {
+        if (_signUpFormKey.currentState.validate()) {
+          await authViewModel.registerUser(context);
+        }
+        // await authViewModel.apiTest(context);
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.symmetric(vertical: 15),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  color: Colors.grey.shade200,
+                  offset: Offset(2, 4),
+                  blurRadius: 5,
+                  spreadRadius: 2)
+            ],
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [primaryColor, backgroundColor])),
+        child: authViewModel.isRegisterLoading
+            ? Text(
+                'loading...',
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              )
+            : Text(
+                'Register Now',
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              ),
       ),
     );
   }
@@ -140,16 +228,6 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget _emailPasswordWidget() {
-    return Column(
-      children: <Widget>[
-        _entryField("Username"),
-        _entryField("Email id"),
-        _entryField("Password", isPassword: true),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -175,7 +253,7 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(
                       height: 50,
                     ),
-                    _emailPasswordWidget(),
+                    _userNameEmailPasswordWidget(),
                     SizedBox(
                       height: 20,
                     ),

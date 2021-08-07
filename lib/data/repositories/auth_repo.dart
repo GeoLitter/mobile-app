@@ -25,26 +25,22 @@ class AuthRepo {
   }
 
   Future loginUser(String email, String password) async {
-    try {
-      final response = await _apiService.post('/login', data: {
-        "email": email,
-        "password": password,
-        // "fcmToken": await _secureLocalStorage.readSecureData("fcmToken")
-      });
-      if (response != null) {
-        //save access token and refresk token
-        await _secureLocalStorage.writeSecureData(
-            'token', response['token']['token']);
-        await _secureLocalStorage.writeSecureData(
-            'refresh_token', response['refreshToken']['token']);
-        //save user id
-        // await _secureLocalStorage.writeSecureData(
-        //     'userId', response['data']['account']['id']);
-        return response;
-      }
-    } catch (e) {
-      print("Error from Repo: $e");
-      throw e;
-    }
+    return await _apiService.post('/login', data: {
+      "email": email,
+      "password": password,
+      // "fcmToken": await _secureLocalStorage.readSecureData("fcmToken")
+    });
+  }
+
+  Future registerUser(String username, String email, String password) async {
+    return await _apiService.post('/signup',
+        data: {"name": username, "email": email, "password": password});
+  }
+
+  Future logoutUser() async {
+    //delete tokens - this should logout user
+    //because of provider viewmodel
+    await _secureLocalStorage.deleteSecureData('token');
+    await _secureLocalStorage.deleteSecureData('refresh_token');
   }
 }

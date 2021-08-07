@@ -1,10 +1,15 @@
+import 'package:ecocrypt/ui/constants/button_styles.dart';
+import 'package:ecocrypt/ui/screens/auth/welcome.dart';
+import 'package:ecocrypt/view-models/AuthViewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class UserProfile extends StatelessWidget {
   const UserProfile({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -71,10 +76,22 @@ class UserProfile extends StatelessWidget {
               ],
             ),
             Container(
-              height: 400.0,
+              height: 100.0,
               width: double.infinity,
               color: Colors.black12,
-              child: Text("Activity"),
+              child: TextButton(
+                style: flatButtonStyle,
+                onPressed: () async {
+                  await authViewModel.logoutUser();
+                  if (!authViewModel.isAuthenticated) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => WelcomePage()));
+                  }
+                  print(
+                      "Is Authenticated from profile: ${authViewModel.isAuthenticated}");
+                },
+                child: Text("Log out"),
+              ),
             )
           ],
         ),
