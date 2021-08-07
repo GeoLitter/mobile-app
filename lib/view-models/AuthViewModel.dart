@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:ecocrypt/data/repositories/auth_repo.dart';
 import 'package:ecocrypt/data/services/secure_storage_service.dart';
@@ -71,9 +70,6 @@ class AuthViewModel extends ChangeNotifier {
       var response = await _authRepo.apiTest();
       print(response);
     } on DioError catch (error) {
-      print("error: ${error.response.data['message']}");
-      displayAlertModal(context, error.response.data['message']);
-      setRegisterLoading = false;
       throw error;
     }
   }
@@ -81,13 +77,10 @@ class AuthViewModel extends ChangeNotifier {
   Future loginUser(context) async {
     setLoginLoading = true;
     try {
-      print("Making request with $email and $password");
       final Response response = await _authRepo.loginUser(email, password);
-      print("Response with no error: ${response}");
-      print("Response with no error: ${response.statusCode}");
       var data = response.data;
       if (response.statusCode == 200 || response.statusCode == 201) {
-        //save access token and refresk token
+        //save access token and refresh token
         await _secureLocalStorage.writeSecureData(
             'token', data['token']['token']);
         await _secureLocalStorage.writeSecureData(
@@ -99,7 +92,6 @@ class AuthViewModel extends ChangeNotifier {
       }
     } on DioError catch (error) {
       displayAlertModal(context, error.response.data['message']);
-      print("Error from ViewModel: $error");
     }
     setLoginLoading = false;
     //make request and notify
@@ -108,20 +100,14 @@ class AuthViewModel extends ChangeNotifier {
   Future registerUser(context) async {
     try {
       setRegisterLoading = true;
-      print("Making request with $email and $password");
       final Response response =
           await _authRepo.registerUser(username, email, password);
-      print("Response with no error: ${response}");
-      print("Response with no error: ${response.statusCode}");
-
-      setRegisterLoading = false;
-      // if (response.statusCode == 200 || response.statusCode == 201) {
-      //   Navigator.push(
-      //       context, MaterialPageRoute(builder: (context) => SignIn()));
-      // }
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        setRegisterLoading = false;
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => SignIn()));
+      }
     } on DioError catch (error) {
-      print("data: ${error.response}");
-      print("error: ${error.response.data['message']}");
       displayAlertModal(context, error.response.data['message']);
       setRegisterLoading = false;
       throw error;
