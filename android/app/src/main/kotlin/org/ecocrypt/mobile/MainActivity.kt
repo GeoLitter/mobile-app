@@ -1,4 +1,4 @@
-package com.example.ecocrypt
+package org.ecocrypt.mobile
 
 import io.flutter.embedding.android.FlutterActivity
 

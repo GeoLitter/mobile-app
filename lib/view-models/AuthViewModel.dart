@@ -1,9 +1,10 @@
 import 'dart:async';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:dio/dio.dart';
-import 'package:ecocrypt/data/repositories/auth_repo.dart';
-import 'package:ecocrypt/data/services/secure_storage_service.dart';
-import 'package:ecocrypt/ui/screens/auth/sign_in.dart';
-import 'package:ecocrypt/utils/alert_info_modal.dart';
+import 'package:mobile/data/repositories/auth_repo.dart';
+import 'package:mobile/data/services/secure_storage_service.dart';
+import 'package:mobile/ui/screens/auth/sign_in.dart';
+import 'package:mobile/utils/alert_info_modal.dart';
 import 'package:flutter/material.dart';
 
 class AuthViewModel extends ChangeNotifier {
@@ -77,6 +78,7 @@ class AuthViewModel extends ChangeNotifier {
     setLoginLoading = true;
     try {
       final Response response = await _authRepo.loginUser(email, password);
+      print(response);
       var data = response.data;
       if (response.statusCode == 200 || response.statusCode == 201) {
         //save access token and refresh token
@@ -84,9 +86,8 @@ class AuthViewModel extends ChangeNotifier {
             'token', data['token']['token']);
         await _secureLocalStorage.writeSecureData(
             'refresh_token', data['refreshToken']['token']);
-        //save user id
-        // await _secureLocalStorage.writeSecureData(
-        //     'userId', data['data']['account']['id']);\
+        await _secureLocalStorage.writeSecureData(
+            'profileId', data['data']['profile']['_id']);
         await updateAuthStatus();
       }
     } on DioError catch (error) {
@@ -104,7 +105,11 @@ class AuthViewModel extends ChangeNotifier {
       if (response.statusCode == 200 || response.statusCode == 201) {
         setRegisterLoading = false;
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignIn()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => SignIn(
+                      title: '',
+                    )));
       }
     } on DioError catch (error) {
       displayAlertModal(context, error.response.data['message']);
@@ -115,7 +120,9 @@ class AuthViewModel extends ChangeNotifier {
 
   Future<void> updateAuthStatus() async {
     //user data exists
+    // ignore: unnecessary_null_comparison
     if (await _secureLocalStorage.readSecureData('token') != null ||
+        // ignore: unnecessary_null_comparison
         await _secureLocalStorage.readSecureData('refresh_token') != null) {
       setIsAuthenticated = true;
     }

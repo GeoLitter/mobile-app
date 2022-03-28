@@ -1,9 +1,10 @@
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:dio/dio.dart';
-import 'package:ecocrypt/data/api_client.dart';
-import 'package:ecocrypt/data/services/secure_storage_service.dart';
+import 'package:mobile/data/api_client.dart';
+import 'package:mobile/data/services/secure_storage_service.dart';
 
 class AuthRepo {
-  ApiService _apiService;
+  late ApiService _apiService;
   final SecureLocalStorage _secureLocalStorage = SecureLocalStorage();
   String _baseUrl = "https://polar-atoll-65466.herokuapp.com";
 

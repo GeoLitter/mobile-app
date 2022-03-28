@@ -1,15 +1,17 @@
-import 'package:ecocrypt/ui/constants/theme_colors.dart';
-import 'package:ecocrypt/ui/screens/auth/sign_up.dart';
-import 'package:ecocrypt/ui/screens/auth/widgets/bezierContainer.dart';
-import 'package:ecocrypt/ui/screens/home/home.dart';
-import 'package:ecocrypt/utils/validation/validation.dart';
-import 'package:ecocrypt/view-models/AuthViewModel.dart';
+import 'package:mobile/ui/constants/theme_colors.dart';
+import 'package:mobile/ui/screens/auth/sign_up.dart';
+import 'package:mobile/ui/screens/auth/widgets/bezierContainer.dart';
+import 'package:mobile/ui/screens/home/home.dart';
+import 'package:mobile/utils/validation/validation.dart';
+import 'package:mobile/view-models/AuthViewModel.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:google_fonts/google_fonts.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:provider/provider.dart';
 
 class SignIn extends StatefulWidget {
-  SignIn({Key key, this.title}) : super(key: key);
+  SignIn({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -73,7 +75,7 @@ class _SignInState extends State<SignIn> {
               colors: [primaryColor, backgroundColor])),
       child: InkWell(
           onTap: () async {
-            if (_signInFormKey.currentState.validate()) {
+            if (_signInFormKey.currentState!.validate()) {
               await authViewModel.loginUser(context);
               if (authViewModel.isAuthenticated) {
                 Navigator.push(
@@ -178,7 +180,11 @@ class _SignInState extends State<SignIn> {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignUp()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => SignUp(
+                      title: '',
+                    )));
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 20),
@@ -251,7 +257,7 @@ class _SignInState extends State<SignIn> {
                   controller: authViewModel.emailController,
                   onChanged: authViewModel.setEmail(),
                   validator: (value) {
-                    return validateEmail(value);
+                    return validateEmail(value!);
                   },
                   obscureText: false,
                   decoration: InputDecoration(
@@ -277,7 +283,7 @@ class _SignInState extends State<SignIn> {
                   controller: authViewModel.passwordController,
                   onChanged: authViewModel.setPassword(),
                   validator: (value) {
-                    return validatePassword(value);
+                    return validatePassword(value!);
                   },
                   obscureText: true,
                   decoration: InputDecoration(

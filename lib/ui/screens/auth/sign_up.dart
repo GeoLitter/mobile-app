@@ -1,14 +1,16 @@
-import 'package:ecocrypt/ui/constants/theme_colors.dart';
-import 'package:ecocrypt/ui/screens/auth/sign_in.dart';
-import 'package:ecocrypt/ui/screens/auth/widgets/bezierContainer.dart';
-import 'package:ecocrypt/utils/validation/validation.dart';
-import 'package:ecocrypt/view-models/AuthViewModel.dart';
+import 'package:mobile/ui/constants/theme_colors.dart';
+import 'package:mobile/ui/screens/auth/sign_in.dart';
+import 'package:mobile/ui/screens/auth/widgets/bezierContainer.dart';
+import 'package:mobile/utils/validation/validation.dart';
+import 'package:mobile/view-models/AuthViewModel.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:google_fonts/google_fonts.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:provider/provider.dart';
 
 class SignUp extends StatefulWidget {
-  SignUp({Key key, this.title}) : super(key: key);
+  SignUp({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -67,7 +69,7 @@ class _SignUpState extends State<SignUp> {
                   controller: authViewModel.usernameController,
                   onChanged: authViewModel.setUsername(),
                   validator: (value) {
-                    return validateUsername(value);
+                    return validateUsername(value!);
                   },
                   obscureText: false,
                   decoration: InputDecoration(
@@ -93,7 +95,7 @@ class _SignUpState extends State<SignUp> {
                   controller: authViewModel.emailController,
                   onChanged: authViewModel.setEmail(),
                   validator: (value) {
-                    return validateEmail(value);
+                    return validateEmail(value!);
                   },
                   obscureText: false,
                   decoration: InputDecoration(
@@ -119,7 +121,7 @@ class _SignUpState extends State<SignUp> {
                   controller: authViewModel.passwordController,
                   onChanged: authViewModel.setPassword(),
                   validator: (value) {
-                    return validatePassword(value);
+                    return validatePassword(value!);
                   },
                   obscureText: true,
                   decoration: InputDecoration(
@@ -137,7 +139,7 @@ class _SignUpState extends State<SignUp> {
     final authViewModel = Provider.of<AuthViewModel>(context, listen: true);
     return InkWell(
       onTap: () async {
-        if (_signUpFormKey.currentState.validate()) {
+        if (_signUpFormKey.currentState!.validate()) {
           await authViewModel.registerUser(context);
         }
         // await authViewModel.apiTest(context);
@@ -176,7 +178,11 @@ class _SignUpState extends State<SignUp> {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignIn()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => SignIn(
+                      title: '',
+                    )));
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 20),

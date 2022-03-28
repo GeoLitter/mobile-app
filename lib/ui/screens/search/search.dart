@@ -1,8 +1,9 @@
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class Search extends StatefulWidget {
-  Search({Key key}) : super(key: key);
+  Search({Key? key}) : super(key: key);
 
   @override
   _SearchState createState() => _SearchState();
@@ -35,7 +36,14 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildBar(context),
+      appBar: AppBar(
+        centerTitle: true,
+        title: _appBarTitle,
+        leading: new IconButton(
+          icon: _searchIcon,
+          onPressed: _searchPressed,
+        ),
+      ),
       resizeToAvoidBottomInset: true,
       body: Container(
         child: _buildList(),
@@ -67,6 +75,7 @@ class _SearchState extends State<Search> {
       filteredNames = tempList;
     }
     return ListView.builder(
+      // ignore: unnecessary_null_comparison
       itemCount: names == null ? 0 : filteredNames.length,
       itemBuilder: (BuildContext context, int index) {
         return new ListTile(

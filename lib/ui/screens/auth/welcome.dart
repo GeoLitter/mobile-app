@@ -1,11 +1,12 @@
-import 'package:ecocrypt/ui/constants/theme_colors.dart';
-import 'package:ecocrypt/ui/screens/auth/sign_in.dart';
-import 'package:ecocrypt/ui/screens/auth/sign_up.dart';
+import 'package:mobile/ui/constants/theme_colors.dart';
+import 'package:mobile/ui/screens/auth/sign_in.dart';
+import 'package:mobile/ui/screens/auth/sign_up.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:google_fonts/google_fonts.dart';
 
 class WelcomePage extends StatefulWidget {
-  WelcomePage({Key key, this.title}) : super(key: key);
+  WelcomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -18,7 +19,11 @@ class _WelcomePageState extends State<WelcomePage> {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignIn()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => SignIn(
+                      title: '',
+                    )));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -46,7 +51,11 @@ class _WelcomePageState extends State<WelcomePage> {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignUp()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => SignUp(
+                      title: '',
+                    )));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,

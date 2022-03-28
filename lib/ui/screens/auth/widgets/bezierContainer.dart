@@ -1,11 +1,11 @@
 import 'dart:math';
 
-import 'package:ecocrypt/ui/constants/theme_colors.dart';
-import 'package:ecocrypt/ui/screens/auth/widgets/clipPainter.dart';
+import 'package:mobile/ui/constants/theme_colors.dart';
+import 'package:mobile/ui/screens/auth/widgets/clipPainter.dart';
 import 'package:flutter/material.dart';
 
 class BezierContainer extends StatelessWidget {
-  const BezierContainer({Key key}) : super(key: key);
+  const BezierContainer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

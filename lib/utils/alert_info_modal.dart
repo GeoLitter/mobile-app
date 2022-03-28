@@ -1,4 +1,4 @@
-import 'package:ecocrypt/ui/constants/button_styles.dart';
+import 'package:mobile/ui/constants/button_styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
