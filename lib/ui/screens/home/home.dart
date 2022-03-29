@@ -1,7 +1,12 @@
-import 'package:ecocrypt/ui/screens/home/widgets/actions_boolbar.dart';
-import 'package:ecocrypt/ui/screens/home/widgets/bottom_toolbar.dart';
-import 'package:ecocrypt/ui/screens/home/widgets/video_description.dart';
+import 'package:mobile/ui/screens/home/widgets/actions_boolbar.dart';
+import 'package:mobile/ui/screens/home/widgets/bottom_toolbar.dart';
+import 'package:mobile/ui/screens/home/widgets/map_view.dart';
+import 'package:mobile/ui/screens/home/widgets/post_view.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/view-models/HomeViewModel.dart';
+import 'package:mobile/view-models/PostViewModel.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -9,12 +14,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  late TabController _tabController;
 
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
     super.initState();
+    final postViewModel = Provider.of<PostViewModel>(context, listen: false);
+    postViewModel.getPostData(context);
   }
 
   Widget topNav() => Container(
@@ -26,7 +33,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               padding: const EdgeInsets.only(left: 20),
               child: IconButton(
                 alignment: Alignment.topCenter,
-                icon: Icon(Icons.map, color: Colors.black54),
+                icon: Icon(Icons.search_outlined, color: Colors.black54),
                 onPressed: () {},
               ),
             ),
@@ -50,10 +57,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         controller: _tabController,
         // give the indicator a decoration (color and border radius)
         indicator: BoxDecoration(
-          border: Border(
-              bottom: BorderSide(width: 2.0, color: Colors.lightGreenAccent)),
+          border: Border(bottom: BorderSide(width: 2.0, color: Colors.blue)),
         ),
-        labelColor: Colors.lightGreenAccent,
+        labelColor: Colors.blue,
         unselectedLabelColor: Colors.black54,
         tabs: [
           // first tab [you can add an icon using the icon property]
@@ -72,30 +78,56 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       ));
 
   Widget middleSection(_tabController, context) => Expanded(
-        child: Container(
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              Stack(children: <Widget>[VideoDescription(), ActionsToolbar()]),
-              Stack(children: <Widget>[VideoDescription(), ActionsToolbar()]),
-              Stack(children: <Widget>[VideoDescription(), ActionsToolbar()])
-            ],
-          ),
-        ),
+        child: Provider.of<PostViewModel>(context, listen: true).isLoading
+            ? Container(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    Provider.of<HomeViewModel>(context, listen: true).isMap
+                        ? ListView.builder(
+                            itemCount: Provider.of<PostViewModel>(context,
+                                    listen: true)
+                                .posts
+                                ?.length,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            // Stack(children: <Widget>[PostView(), ActionsToolbar()])
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.75,
+                                  child: Stack(children: <Widget>[
+                                    PostView(index),
+                                    ActionsToolbar(index)
+                                  ]));
+                            })
+                        : MapView(),
+                    Provider.of<HomeViewModel>(context, listen: true).isMap
+                        ? Container(
+                            height: MediaQuery.of(context).size.height * 0.75,
+                            child: Text("Hello"))
+                        : MapView(),
+                    Provider.of<HomeViewModel>(context, listen: true).isMap
+                        ? Container(
+                            height: MediaQuery.of(context).size.height * 0.75,
+                            child: Text("Hello"))
+                        : MapView(),
+                  ],
+                ),
+              )
+            : Text("Loading..."),
       );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightGreen,
+      backgroundColor: Colors.white,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           //Top Nav
-          // topNav(),
+          topNav(),
           // Top section
-          // topSection(_tabController, context),
-
+          topSection(_tabController, context),
           // Middle expanded
           middleSection(_tabController, context),
 

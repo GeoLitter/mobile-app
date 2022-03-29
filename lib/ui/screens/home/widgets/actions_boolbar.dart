@@ -1,3 +1,4 @@
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -16,11 +17,14 @@ class ActionsToolbar extends StatelessWidget {
 
 // The size of the plus icon under the profile image in follow action
   static const double PlusIconSize = 20.0;
+  final int index;
+
+  ActionsToolbar(this.index);
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 0,
+      bottom: 70,
       right: 0,
       child: Container(
         width: 100.0,
@@ -29,13 +33,13 @@ class ActionsToolbar extends StatelessWidget {
           _getSocialAction(icon: Icons.favorite, title: '3.2m'),
           _getSocialAction(icon: Icons.chat_bubble, title: '16.4k'),
           _getSocialAction(icon: Icons.share, title: 'Share', isShare: true),
-          _getMusicPlayerAction()
         ]),
       ),
     );
   }
 
-  Widget _getSocialAction({String title, IconData icon, bool isShare = false}) {
+  Widget _getSocialAction(
+      {String? title, IconData? icon, bool isShare = false}) {
     return Container(
         margin: EdgeInsets.only(top: 15.0),
         width: 60.0,
@@ -44,13 +48,15 @@ class ActionsToolbar extends StatelessWidget {
           Icon(icon, size: isShare ? 25.0 : 35.0, color: Colors.grey[300]),
           Padding(
             padding: EdgeInsets.only(top: isShare ? 5.0 : 2.0),
-            child:
-                Text(title, style: TextStyle(fontSize: isShare ? 10.0 : 12.0)),
+            child: Text(title!,
+                style: TextStyle(
+                    fontSize: isShare ? 10.0 : 12.0, color: Colors.grey)),
           )
         ]));
   }
 
-  Widget _getFollowAction({String pictureUrl}) {
+  // ignore: unused_element
+  Widget _getFollowAction({String? pictureUrl}) {
     return Container(
         margin: EdgeInsets.symmetric(vertical: 10.0),
         width: 60.0,
@@ -79,55 +85,17 @@ class ActionsToolbar extends StatelessWidget {
   Widget _getProfilePicture() {
     return Positioned(
         left: (ActionWidgetSize / 2) - (ProfileImageSize / 2),
-        child: Container(
-            padding:
-                EdgeInsets.all(1.0), // Add 1.0 point padding to create border
-            height: ProfileImageSize, // ProfileImageSize = 50.0;
-            width: ProfileImageSize, // ProfileImageSize = 50.0;
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(ProfileImageSize / 2)),
-            // import 'package:cached_network_image/cached_network_image.dart'; at the top to use CachedNetworkImage
-            child: CachedNetworkImage(
-              imageUrl:
-                  "https://secure.gravatar.com/avatar/ef4a9338dca42372f15427cdb4595ef7",
-              placeholder: (context, url) => new CircularProgressIndicator(),
-              errorWidget: (context, url, error) => new Icon(Icons.error),
-            )));
-  }
-
-  LinearGradient get musicGradient => LinearGradient(colors: [
-        Colors.grey[800],
-        Colors.grey[900],
-        Colors.grey[900],
-        Colors.grey[800]
-      ], stops: [
-        0.0,
-        0.4,
-        0.6,
-        1.0
-      ], begin: Alignment.bottomLeft, end: Alignment.topRight);
-
-  Widget _getMusicPlayerAction() {
-    return Container(
-        margin: EdgeInsets.only(top: 10.0),
-        width: ActionWidgetSize,
-        height: ActionWidgetSize,
-        child: Column(children: [
-          Container(
-            padding: EdgeInsets.all(11.0),
-            height: ProfileImageSize,
-            width: ProfileImageSize,
-            decoration: BoxDecoration(
-                gradient: musicGradient,
-                borderRadius: BorderRadius.circular(ProfileImageSize / 2)),
-            child: CachedNetworkImage(
-              imageUrl:
-                  "https://secure.gravatar.com/avatar/ef4a9338dca42372f15427cdb4595ef7",
-              placeholder: (context, url) => new CircularProgressIndicator(),
-              errorWidget: (context, url, error) => new Icon(Icons.error),
-            ),
+        child: CircleAvatar(
+          radius: ProfileImageSize / 2,
+          backgroundImage: NetworkImage(
+            "https://avatars.githubusercontent.com/u/20497361?v=4",
           ),
-        ]));
+        ));
   }
+
+  LinearGradient get musicGradient => LinearGradient(
+      colors: [],
+      stops: [0.0, 0.4, 0.6, 1.0],
+      begin: Alignment.bottomLeft,
+      end: Alignment.topRight);
 }
