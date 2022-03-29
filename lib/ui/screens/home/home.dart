@@ -1,8 +1,11 @@
 import 'package:mobile/ui/screens/home/widgets/actions_boolbar.dart';
 import 'package:mobile/ui/screens/home/widgets/bottom_toolbar.dart';
+import 'package:mobile/ui/screens/home/widgets/map_view.dart';
 import 'package:mobile/ui/screens/home/widgets/post_view.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/view-models/HomeViewModel.dart';
 import 'package:mobile/view-models/PostViewModel.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -80,29 +83,34 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    ListView.builder(
-                        itemCount:
-                            Provider.of<PostViewModel>(context, listen: true)
+                    Provider.of<HomeViewModel>(context, listen: true).isMap
+                        ? ListView.builder(
+                            itemCount: Provider.of<PostViewModel>(context,
+                                    listen: true)
                                 .posts
                                 ?.length,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        // Stack(children: <Widget>[PostView(), ActionsToolbar()])
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                              height: MediaQuery.of(context).size.height * 0.75,
-                              child: Stack(children: <Widget>[
-                                PostView(index),
-                                ActionsToolbar(index)
-                              ]));
-                        }),
-                    Container(
-                        height: MediaQuery.of(context).size.height * 0.75,
-                        // child:
-                        //     Stack(children: <Widget>[PostView(index), ActionsToolbar()])),
-                        child: Text("Hello")),
-                    Container(
-                        height: MediaQuery.of(context).size.height * 0.75,
-                        child: Text("Hello")),
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            // Stack(children: <Widget>[PostView(), ActionsToolbar()])
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.75,
+                                  child: Stack(children: <Widget>[
+                                    PostView(index),
+                                    ActionsToolbar(index)
+                                  ]));
+                            })
+                        : MapView(),
+                    Provider.of<HomeViewModel>(context, listen: true).isMap
+                        ? Container(
+                            height: MediaQuery.of(context).size.height * 0.75,
+                            child: Text("Hello"))
+                        : MapView(),
+                    Provider.of<HomeViewModel>(context, listen: true).isMap
+                        ? Container(
+                            height: MediaQuery.of(context).size.height * 0.75,
+                            child: Text("Hello"))
+                        : MapView(),
                   ],
                 ),
               )
