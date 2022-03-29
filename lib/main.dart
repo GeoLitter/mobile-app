@@ -7,6 +7,7 @@ import 'package:mobile/view-models/ProfileViewModel.dart';
 import 'package:provider/provider.dart';
 
 import 'ui/constants/theme_colors.dart';
+import 'view-models/HomeViewModel.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AuthViewModel>(create: (_) => AuthViewModel()),
         ChangeNotifierProvider<ProfileViewModel>(
             create: (_) => ProfileViewModel()),
-        ChangeNotifierProvider<PostViewModel>(create: (_) => PostViewModel())
+        ChangeNotifierProvider<PostViewModel>(create: (_) => PostViewModel()),
+        ChangeNotifierProvider<HomeViewModel>(create: (_) => HomeViewModel())
       ],
       child: MaterialApp(
         title: 'EcoCrypt',
