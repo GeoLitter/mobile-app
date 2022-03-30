@@ -2,6 +2,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/view-models/PostViewModel.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:provider/provider.dart';
 
 class ActionsToolbar extends StatelessWidget {
@@ -97,10 +98,4 @@ class ActionsToolbar extends StatelessWidget {
           ),
         ));
   }
-
-  LinearGradient get musicGradient => LinearGradient(
-      colors: [],
-      stops: [0.0, 0.4, 0.6, 1.0],
-      begin: Alignment.bottomLeft,
-      end: Alignment.topRight);
 }
