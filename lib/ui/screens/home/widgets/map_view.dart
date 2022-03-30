@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import "package:latlong/latlong.dart" as latLng;
+import 'package:mobile/view-models/PostViewModel.dart';
+import 'package:provider/provider.dart';
 
 class MapView extends StatelessWidget {
   final List<latLng.LatLng> _markerPositions = [
@@ -27,7 +29,7 @@ class MapView extends StatelessWidget {
               subdomains: ['a', 'b', 'c'],
             ),
             MarkerLayerOptions(
-              markers: _markers,
+              markers: Provider.of<PostViewModel>(context).markers,
             ),
           ],
         ));
