@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/ui/screens/AuthWrapper.dart';
 import 'package:mobile/view-models/AuthViewModel.dart';
+import 'package:mobile/view-models/HomeViewModel.dart';
 import 'package:mobile/view-models/PostViewModel.dart';
 import 'package:mobile/view-models/ProfileViewModel.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:provider/provider.dart';
 
 import 'ui/constants/theme_colors.dart';
-import 'view-models/HomeViewModel.dart';
 
 void main() {
   runApp(const MyApp());

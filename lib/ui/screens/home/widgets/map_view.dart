@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import "package:latlong/latlong.dart" as latLng;
+import 'package:mobile/view-models/PostViewModel.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:provider/provider.dart';
 
 class MapView extends StatelessWidget {
-  const MapView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,26 +25,7 @@ class MapView extends StatelessWidget {
               subdomains: ['a', 'b', 'c'],
             ),
             MarkerLayerOptions(
-              markers: [
-                Marker(
-                  width: 60.0,
-                  height: 60.0,
-                  point: latLng.LatLng(17.1523, -89.0800),
-                  builder: (ctx) => Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white, width: 2),
-                        borderRadius: BorderRadius.all(Radius.circular(60))),
-                    child: Padding(
-                      padding: const EdgeInsets.all(1),
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            "https://media0.giphy.com/media/b5xDLakZRxJ6M/200.gif"),
-                        radius: 60.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              markers: Provider.of<PostViewModel>(context).markers,
             ),
           ],
         ));

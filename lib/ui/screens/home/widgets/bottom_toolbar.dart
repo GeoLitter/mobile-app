@@ -1,25 +1,30 @@
 import 'package:mobile/ui/screens/profiles/user_profile.dart';
-import 'package:mobile/ui/screens/search/search.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/utils/bottom_sheet_modal.dart';
+import 'package:mobile/view-models/HomeViewModel.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:provider/provider.dart';
 
 class BottomToolbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final homeViewModel = Provider.of<HomeViewModel>(context, listen: true);
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           ElevatedButton(
-            onPressed: (() => {}),
+            onPressed: (() => {homeViewModel.toggleMap()}),
             child: Icon(
               Icons.map,
               color: Colors.white,
             ),
           ),
           ElevatedButton(
-              onPressed: (() => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Search()))),
+              onPressed: (() {
+                displayBottomSheet(context);
+              }),
               child: Icon(Icons.camera_enhance_rounded, color: Colors.white)),
           ElevatedButton(
               onPressed: () {

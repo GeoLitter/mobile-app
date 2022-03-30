@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:provider/provider.dart';
 
 import '../../../../view-models/PostViewModel.dart';
@@ -32,15 +33,17 @@ class PostView extends StatelessWidget {
                 ),
                 Text(
                   '${postViewModel.posts?[index]['description'] ?? "No Description"}',
-                  style: TextStyle(color: Colors.grey),
+                  style: TextStyle(
+                      color: Colors.grey, overflow: TextOverflow.ellipsis),
                 ),
                 Row(children: [
                   Icon(
-                    Icons.music_note,
+                    Icons.place,
                     size: 15.0,
                     color: Colors.grey,
                   ),
-                  Text('Artist name - Album name - song',
+                  Text(
+                      'Location - lat ${postViewModel.posts?[index]['lat']} long ${postViewModel.posts?[index]['lat']}',
                       style: TextStyle(fontSize: 12.0, color: Colors.grey))
                 ]),
               ],

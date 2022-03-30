@@ -1,5 +1,6 @@
 import 'package:mobile/ui/constants/button_styles.dart';
-import 'package:mobile/ui/screens/auth/welcome.dart';
+// import 'package:mobile/ui/screens/auth/welcome.dart';
+import 'package:mobile/utils/snack_bar.dart';
 import 'package:mobile/view-models/AuthViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/view-models/ProfileViewModel.dart';
@@ -40,7 +41,7 @@ class _UserProfileState extends State<UserProfile> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             CircleAvatar(
               backgroundImage: NetworkImage(profileViewModel
@@ -56,93 +57,111 @@ class _UserProfileState extends State<UserProfile> {
                     style: TextStyle(fontSize: 32.0),
                   ),
             Text(
-              profileViewModel.profileInfo?['status'] ?? "Status",
+              profileViewModel.profileInfo?['status'] ?? "Bio",
+              style: TextStyle(fontSize: 18.0, fontStyle: FontStyle.italic),
+            ),
+            Text(
+              profileViewModel.profileInfo?['bio'] ?? "Status",
               style: TextStyle(fontSize: 16.0),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    CircleAvatar(
-                      backgroundColor: Colors.blue,
-                      radius: 23,
-                      child: Text(
-                        '50',
-                        style: TextStyle(color: Colors.white),
+            SafeArea(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      CircleAvatar(
+                        backgroundColor: Colors.blue,
+                        radius: 23,
+                        child: Text(
+                          '0',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Text('Followers')
-                  ],
-                ),
-                Column(
-                  children: <Widget>[
-                    CircleAvatar(
-                      backgroundColor: Colors.blue,
-                      radius: 23,
-                      child: Text(
-                        '100',
-                        style: TextStyle(color: Colors.white),
+                      SizedBox(
+                        height: 10.0,
                       ),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Text('Following')
-                  ],
-                )
-              ],
-            ),
-            Container(
-              height: 100.0,
-              width: MediaQuery.of(context).size.width * 0.85,
-              child: TextButton(
-                style: flatButtonStyle,
-                onPressed: () async {
-                  await authViewModel.logoutUser();
-                  if (!authViewModel.isAuthenticated) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => WelcomePage(
-                                  title: '',
-                                )));
-                  }
-                  print(
-                      "Is Authenticated from profile: ${authViewModel.isAuthenticated}");
-                },
-                child: Text("Privacey"),
+                      Text('Followers')
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      CircleAvatar(
+                        backgroundColor: Colors.blue,
+                        radius: 23,
+                        child: Text(
+                          '0',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Text('Following')
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      CircleAvatar(
+                        backgroundColor: Colors.blue,
+                        radius: 23,
+                        child: Text(
+                          '0',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Text('Contributions')
+                    ],
+                  )
+                ],
               ),
             ),
             Container(
-              height: 100.0,
+              height: 60,
               width: MediaQuery.of(context).size.width * 0.85,
               child: TextButton(
                 style: flatButtonStyle,
                 onPressed: () async {
-                  await profileViewModel.getProfileData(context);
-                  print(
-                      "Is Authenticated from profile: ${profileViewModel.isLoading}");
+                  print("Privacy Screen");
+                  // await authViewModel.logoutUser();
+                  // if (!authViewModel.isAuthenticated) {
+                  //   Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: (context) => WelcomePage(
+                  //                 title: '',
+                  //               )));
+                  // }
+                  // print(
+                  //     "Is Authenticated from profile: ${authViewModel.isAuthenticated}");
+                },
+                child: Text("Privacy"),
+              ),
+            ),
+            Container(
+              height: 60,
+              width: MediaQuery.of(context).size.width * 0.85,
+              child: TextButton(
+                style: flatButtonStyle,
+                onPressed: () async {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(displaySnackBar(context, "Hello"));
                 },
                 child: Text("Settings"),
               ),
             ),
             Container(
-              height: 100.0,
+              height: 60,
               width: MediaQuery.of(context).size.width * 0.85,
               child: TextButton(
                 style: flatButtonStyle,
-                onPressed: () async {
-                  await profileViewModel.getProfileData(context);
-                  print(
-                      "Is Authenticated from profile: ${profileViewModel.isLoading}");
-                },
+                onPressed: () async {},
                 child: Text("Logout"),
               ),
-            )
+            ),
           ],
         ),
       ),

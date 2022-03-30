@@ -23,6 +23,16 @@
         "--flavor",
         "prod"
       ]
+    },
+    {
+      "name": "Ecocrypt",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "-t",
+        "lib/main.dart",
+        "--no-sound-null-safety" 
+      ]
     }
   ]
 }

@@ -1,6 +1,9 @@
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/view-models/PostViewModel.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:provider/provider.dart';
 
 class ActionsToolbar extends StatelessWidget {
   // Full dimensions of an action
@@ -29,7 +32,7 @@ class ActionsToolbar extends StatelessWidget {
       child: Container(
         width: 100.0,
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          _getFollowAction(),
+          _getFollowAction(context),
           _getSocialAction(icon: Icons.favorite, title: '3.2m'),
           _getSocialAction(icon: Icons.chat_bubble, title: '16.4k'),
           _getSocialAction(icon: Icons.share, title: 'Share', isShare: true),
@@ -56,12 +59,13 @@ class ActionsToolbar extends StatelessWidget {
   }
 
   // ignore: unused_element
-  Widget _getFollowAction({String? pictureUrl}) {
+  Widget _getFollowAction(context) {
     return Container(
         margin: EdgeInsets.symmetric(vertical: 10.0),
         width: 60.0,
         height: 60.0,
-        child: Stack(children: [_getProfilePicture(), _getPlusIcon()]));
+        child: Stack(
+            children: [_getProfilePicture(context, index), _getPlusIcon()]));
   }
 
   Widget _getPlusIcon() {
@@ -82,20 +86,16 @@ class ActionsToolbar extends StatelessWidget {
     );
   }
 
-  Widget _getProfilePicture() {
+  Widget _getProfilePicture(context, index) {
+    final postViewModel = Provider.of<PostViewModel>(context, listen: true);
     return Positioned(
         left: (ActionWidgetSize / 2) - (ProfileImageSize / 2),
         child: CircleAvatar(
           radius: ProfileImageSize / 2,
           backgroundImage: NetworkImage(
-            "https://avatars.githubusercontent.com/u/20497361?v=4",
+            postViewModel.posts[index]['avatar'] ??
+                "https://avatars.githubusercontent.com/u/20497361?v=4",
           ),
         ));
   }
-
-  LinearGradient get musicGradient => LinearGradient(
-      colors: [],
-      stops: [0.0, 0.4, 0.6, 1.0],
-      begin: Alignment.bottomLeft,
-      end: Alignment.topRight);
 }
