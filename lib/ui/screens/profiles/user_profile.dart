@@ -1,5 +1,5 @@
 import 'package:mobile/ui/constants/button_styles.dart';
-import 'package:mobile/ui/screens/auth/welcome.dart';
+// import 'package:mobile/ui/screens/auth/welcome.dart';
 import 'package:mobile/utils/snack_bar.dart';
 import 'package:mobile/view-models/AuthViewModel.dart';
 import 'package:flutter/material.dart';
@@ -158,11 +158,7 @@ class _UserProfileState extends State<UserProfile> {
               width: MediaQuery.of(context).size.width * 0.85,
               child: TextButton(
                 style: flatButtonStyle,
-                onPressed: () async {
-                  await profileViewModel.getProfileData(context);
-                  print(
-                      "Is Authenticated from profile: ${profileViewModel.isLoading}");
-                },
+                onPressed: () async {},
                 child: Text("Logout"),
               ),
             ),
