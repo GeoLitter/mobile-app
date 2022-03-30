@@ -125,8 +125,6 @@ class ApiService {
         //save new token
         await _secureLocalStorage.writeSecureData(
             'token', response.data['token']['token']);
-        await _secureLocalStorage.writeSecureData(
-            'refresh_token', response.data['refresh_token']['token']);
       } else {
         await _secureLocalStorage.writeSecureData('refresh_token', '');
         await _secureLocalStorage.writeSecureData('token', '');
