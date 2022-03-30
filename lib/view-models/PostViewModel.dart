@@ -33,7 +33,8 @@ class PostViewModel extends ChangeNotifier {
               padding: const EdgeInsets.all(1),
               child: CircleAvatar(
                 backgroundImage: NetworkImage(
-                    "https://media0.giphy.com/media/b5xDLakZRxJ6M/200.gif"),
+                    _posts?[_markerPositions.indexOf(markerPosition)]
+                        ['postImage']),
                 radius: 60.0,
               ),
             ),
