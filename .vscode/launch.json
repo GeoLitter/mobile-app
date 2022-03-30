@@ -1,0 +1,38 @@
+{ 
+  "version": "2.0.0",
+  "configurations": [
+  
+    {
+      "name": "Ecocrypt Dev",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "-t",
+        "lib/main_dev.dart",
+        "--flavor",
+        "dev"
+      ]
+    },
+    {
+      "name": "Ecocrypt Prod",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "-t",
+        "lib/main_prod.dart",
+        "--flavor",
+        "prod"
+      ]
+    },
+    {
+      "name": "Ecocrypt",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "-t",
+        "lib/main.dart",
+        "--no-sound-null-safety" 
+      ]
+    }
+  ]
+}
