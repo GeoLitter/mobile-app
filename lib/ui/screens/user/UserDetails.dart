@@ -5,8 +5,22 @@ class UserDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("User Details"),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Profile',
+          style: TextStyle(color: Colors.black),
+        ),
+        leading: BackButton(
+          color: Colors.black54,
+        ),
+        automaticallyImplyLeading: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
+      body: Container(
+        child: Text("User Details"),
+      ),
     );
   }
 }
