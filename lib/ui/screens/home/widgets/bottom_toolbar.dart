@@ -16,10 +16,15 @@ class BottomToolbar extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: (() => {homeViewModel.toggleMap()}),
-            child: Icon(
-              Icons.map,
-              color: Colors.white,
-            ),
+            child: homeViewModel.isMap
+                ? Icon(
+                    Icons.map,
+                    color: Colors.white,
+                  )
+                : Icon(
+                    Icons.list,
+                    color: Colors.white,
+                  ),
           ),
           ElevatedButton(
               onPressed: (() {
