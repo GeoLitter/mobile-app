@@ -1,6 +1,7 @@
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/ui/screens/user/UserDetails.dart';
 import 'package:mobile/view-models/PostViewModel.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:provider/provider.dart';
@@ -60,12 +61,18 @@ class ActionsToolbar extends StatelessWidget {
 
   // ignore: unused_element
   Widget _getFollowAction(context) {
-    return Container(
-        margin: EdgeInsets.symmetric(vertical: 10.0),
-        width: 60.0,
-        height: 60.0,
-        child: Stack(
-            children: [_getProfilePicture(context, index), _getPlusIcon()]));
+    return InkWell(
+      onTap: (() {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => UserDetails()));
+      }),
+      child: Container(
+          margin: EdgeInsets.symmetric(vertical: 10.0),
+          width: 60.0,
+          height: 60.0,
+          child: Stack(
+              children: [_getProfilePicture(context, index), _getPlusIcon()])),
+    );
   }
 
   Widget _getPlusIcon() {
