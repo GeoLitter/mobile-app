@@ -7,6 +7,7 @@ import 'package:flutter_map/flutter_map.dart';
 import "package:latlong/latlong.dart" as latLng;
 import 'package:mobile/data/repositories/post_repo.dart';
 
+import '../ui/screens/post/PostDetails.dart';
 import '../utils/alert_info_modal.dart';
 
 class PostViewModel extends ChangeNotifier {
@@ -25,17 +26,23 @@ class PostViewModel extends ChangeNotifier {
           width: 60.0,
           height: 60.0,
           point: markerPosition,
-          builder: (ctx) => Container(
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.white, width: 2),
-                borderRadius: BorderRadius.all(Radius.circular(60))),
-            child: Padding(
-              padding: const EdgeInsets.all(1),
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    _posts?[_markerPositions.indexOf(markerPosition)]
-                        ['postImage']),
-                radius: 60.0,
+          builder: (ctx) => InkWell(
+            onLongPress: (() {
+              Navigator.push(
+                  ctx, MaterialPageRoute(builder: (context) => PostDetails()));
+            }),
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white, width: 2),
+                  borderRadius: BorderRadius.all(Radius.circular(60))),
+              child: Padding(
+                padding: const EdgeInsets.all(1),
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      _posts?[_markerPositions.indexOf(markerPosition)]
+                          ['postImage']),
+                  radius: 60.0,
+                ),
               ),
             ),
           ),
