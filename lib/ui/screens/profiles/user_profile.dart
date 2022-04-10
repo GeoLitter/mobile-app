@@ -1,4 +1,5 @@
 import 'package:mobile/ui/constants/button_styles.dart';
+import 'package:mobile/ui/screens/user/UserSettings.dart';
 // import 'package:mobile/ui/screens/auth/welcome.dart';
 import 'package:mobile/utils/snack_bar.dart';
 import 'package:mobile/view-models/AuthViewModel.dart';
@@ -147,8 +148,10 @@ class _UserProfileState extends State<UserProfile> {
               child: TextButton(
                 style: flatButtonStyle,
                 onPressed: () async {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(displaySnackBar(context, "Hello"));
+                  // ScaffoldMessenger.of(context)
+                  //     .showSnackBar(displaySnackBar(context, "Hello"));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => UserSettings()));
                 },
                 child: Text("Settings"),
               ),
