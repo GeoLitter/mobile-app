@@ -1,4 +1,5 @@
 import 'package:mobile/ui/constants/button_styles.dart';
+import 'package:mobile/ui/screens/user/UserPrivacy.dart';
 import 'package:mobile/ui/screens/user/UserSettings.dart';
 // import 'package:mobile/ui/screens/auth/welcome.dart';
 import 'package:mobile/utils/snack_bar.dart';
@@ -138,6 +139,8 @@ class _UserProfileState extends State<UserProfile> {
                   // }
                   // print(
                   //     "Is Authenticated from profile: ${authViewModel.isAuthenticated}");
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => UserPrivacy()));
                 },
                 child: Text("Privacy"),
               ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Privacy extends StatelessWidget {
-  const Privacy({Key? key}) : super(key: key);
+class UserPrivacy extends StatelessWidget {
+  const UserPrivacy({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
