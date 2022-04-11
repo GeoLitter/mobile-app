@@ -77,4 +77,15 @@ class PostViewModel extends ChangeNotifier {
       displayAlertModal(context, error.response?.data['message']);
     }
   }
+
+  Future likePost(context) async {
+    try {
+      Response response = await _postsRepo.likePost("");
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print("Post liked");
+      }
+    } on DioError catch (error) {
+      displayAlertModal(context, error.response?.data['message']);
+    }
+  }
 }
