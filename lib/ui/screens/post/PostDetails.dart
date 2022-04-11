@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import "package:latlong/latlong.dart" as latLng;
+import 'package:mobile/ui/components/comments_bottomsheet.dart';
 
 class PostDetails extends StatelessWidget {
   const PostDetails({Key? key}) : super(key: key);
@@ -78,7 +79,9 @@ class PostDetails extends StatelessWidget {
                           Icons.comment_outlined,
                           size: 20,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          displayCommentsBottomSheet(context);
+                        },
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
