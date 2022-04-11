@@ -46,8 +46,43 @@ class PostDetails extends StatelessWidget {
               fit: BoxFit.cover,
               image: NetworkImage(
                   'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-            )
+            ),
             //tabs info, comments, map
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(10)),
+                  child: const Icon(
+                    Icons.info_outline,
+                    size: 20,
+                  ),
+                  onPressed: () {},
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(10)),
+                  child: const Icon(
+                    Icons.comment_outlined,
+                    size: 20,
+                  ),
+                  onPressed: () {},
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(10)),
+                  child: const Icon(
+                    Icons.share,
+                    size: 20,
+                  ),
+                  onPressed: () {},
+                ),
+              ],
+            )
           ],
         ),
       ),
