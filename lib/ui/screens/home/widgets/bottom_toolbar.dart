@@ -33,8 +33,7 @@ class BottomToolbar extends StatelessWidget {
               child: Icon(Icons.camera_enhance_rounded, color: Colors.white)),
           ElevatedButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => UserProfile()));
+                print("Profile Icon CLicked");
               },
               child: Icon(Icons.people, color: Colors.white))
         ],

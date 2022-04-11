@@ -21,72 +21,61 @@ void displayBottomSheet(BuildContext context) {
                 children: [
                   Column(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.green, width: 4),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(50))),
-                        height: 80,
-                        width: 80,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.post_add,
-                            color: Colors.green[400],
-                            size: 60,
-                          ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.green,
+                            shape: const CircleBorder(),
+                            padding: const EdgeInsets.all(10)),
+                        child: const Icon(
+                          Icons.post_add_sharp,
+                          size: 50,
                         ),
+                        onPressed: () {},
                       ),
-                      Text("New")
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("New"),
+                      )
                     ],
                   ),
                   Column(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.green, width: 4),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(50))),
-                        height: 80,
-                        width: 80,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.camera_alt_outlined,
-                            color: Colors.green[400],
-                            size: 60,
-                          ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.green,
+                            shape: const CircleBorder(),
+                            padding: const EdgeInsets.all(10)),
+                        child: const Icon(
+                          Icons.camera_alt_outlined,
+                          size: 50,
                         ),
+                        onPressed: () {},
                       ),
-                      Text("Camera")
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Camera"),
+                      )
                     ],
                   ),
                   Column(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.green, width: 4),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(50))),
-                        height: 80,
-                        width: 80,
-                        child: InkWell(
-                          onTap: () {
-                            print("Clicked");
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.image_search_outlined,
-                              color: Colors.green[400],
-                              size: 60,
-                            ),
-                          ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.green,
+                            shape: const CircleBorder(),
+                            padding: const EdgeInsets.all(10)),
+                        child: const Icon(
+                          Icons.image_search,
+                          size: 50,
                         ),
+                        onPressed: () {},
                       ),
-                      Text("Images")
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Images"),
+                      )
                     ],
-                  )
+                  ),
                 ]),
           ),
         );

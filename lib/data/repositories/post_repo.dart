@@ -26,4 +26,8 @@ class PostsRepo {
   Future createPost() async {
     await _apiService.post('/');
   }
+
+  Future likePost(String id) async {
+    await _apiService.post('/like/$id');
+  }
 }
