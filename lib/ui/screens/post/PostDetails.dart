@@ -39,8 +39,14 @@ class PostDetails extends StatelessWidget {
                 ),
                 Text("22/04/12")
               ],
-            )
+            ),
             //images/images
+            Image(
+              height: 400,
+              fit: BoxFit.cover,
+              image: NetworkImage(
+                  'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+            )
             //tabs info, comments, map
           ],
         ),
