@@ -47,42 +47,123 @@ class PostDetails extends StatelessWidget {
               image: NetworkImage(
                   'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
             ),
-            //tabs info, comments, map
+            //post info actions, comments, share
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(10)),
+                    child: const Icon(
+                      Icons.info_outline,
+                      size: 20,
+                    ),
+                    onPressed: () {},
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(10)),
+                    child: const Icon(
+                      Icons.comment_outlined,
+                      size: 20,
+                    ),
+                    onPressed: () {},
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(10)),
+                    child: const Icon(
+                      Icons.share,
+                      size: 20,
+                    ),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Data Assesment"),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      shape: const CircleBorder(),
-                      padding: const EdgeInsets.all(10)),
-                  child: const Icon(
-                    Icons.info_outline,
-                    size: 20,
-                  ),
-                  onPressed: () {},
+                Column(
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.lightGreen,
+                      radius: 20,
+                      child: Icon(
+                        Icons.check_circle,
+                        size: 40,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Unresolved', style: TextStyle(fontSize: 12)),
+                    )
+                  ],
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      shape: const CircleBorder(),
-                      padding: const EdgeInsets.all(10)),
-                  child: const Icon(
-                    Icons.comment_outlined,
-                    size: 20,
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: Divider(
+                      thickness: 2,
+                      color: Colors.blue,
+                    ),
                   ),
-                  onPressed: () {},
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      shape: const CircleBorder(),
-                      padding: const EdgeInsets.all(10)),
-                  child: const Icon(
-                    Icons.share,
-                    size: 20,
+                Column(
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.lightGreen,
+                      radius: 20,
+                      child: Icon(
+                        Icons.check_circle,
+                        size: 40,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Unresolved',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    )
+                  ],
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: Divider(
+                      thickness: 2,
+                      color: Colors.blue,
+                    ),
                   ),
-                  onPressed: () {},
                 ),
+                Column(
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.lightGreen,
+                      radius: 20,
+                      child: Icon(
+                        Icons.check_circle,
+                        size: 40,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Unresolved', style: TextStyle(fontSize: 12)),
+                    )
+                  ],
+                )
               ],
-            )
+            ),
           ],
         ),
       ),
