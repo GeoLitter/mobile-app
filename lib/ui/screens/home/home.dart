@@ -8,6 +8,8 @@ import 'package:mobile/view-models/PostViewModel.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:provider/provider.dart';
 
+import '../profiles/user_profile.dart';
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -42,7 +44,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               child: IconButton(
                 alignment: Alignment.topCenter,
                 icon: Icon(Icons.settings, color: Colors.black54),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => UserProfile()));
+                },
               ),
             )
           ],
