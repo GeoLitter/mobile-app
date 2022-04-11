@@ -19,7 +19,31 @@ class PostDetails extends StatelessWidget {
         elevation: 0,
       ),
       body: Container(
-        child: Text("Post"),
+        child: Column(
+          children: [
+            //post info - avatar, handle, date
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        "https://cdn5.vectorstock.com/i/1000x1000/51/99/icon-of-user-avatar-for-web-site-or-mobile-app-vector-3125199.jpg"),
+                    radius: 20.0,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Text("@lmanzanero"),
+                ),
+                Text("22/04/12")
+              ],
+            )
+            //images/images
+            //tabs info, comments, map
+          ],
+        ),
       ),
     );
   }
