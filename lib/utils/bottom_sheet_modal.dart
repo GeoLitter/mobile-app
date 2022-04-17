@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 
 void displayBottomSheet(BuildContext context) {
   showModalBottomSheet(
@@ -49,7 +51,16 @@ void displayBottomSheet(BuildContext context) {
                           Icons.camera_alt_outlined,
                           size: 50,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          try {
+                            final image = ImagePicker()
+                                .pickImage(source: ImageSource.camera);
+                            if (image == null) return;
+                          } on PlatformException catch (e) {
+                            print(e);
+                          }
+                          ;
+                        },
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
