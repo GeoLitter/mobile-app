@@ -5,8 +5,6 @@ import 'package:mobile/utils/validation/validation.dart';
 import 'package:mobile/view-models/AuthViewModel.dart';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
-import 'package:google_fonts/google_fonts.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:provider/provider.dart';
 
 class SignUp extends StatefulWidget {
@@ -214,23 +212,16 @@ class _SignUpState extends State<SignUp> {
   Widget _title() {
     return RichText(
       textAlign: TextAlign.center,
-      text: TextSpan(
-          text: 'Eco',
-          style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.headline4,
-            fontSize: 30,
-            fontWeight: FontWeight.w700,
-          ),
-          children: [
-            TextSpan(
-              text: 'Crpt',
-              style: TextStyle(color: Colors.black, fontSize: 30),
-            ),
-            TextSpan(
-              text: '.org',
-              style: TextStyle(color: backgroundColor, fontSize: 30),
-            ),
-          ]),
+      text: TextSpan(text: 'Eco', children: [
+        TextSpan(
+          text: 'Crpt',
+          style: TextStyle(color: Colors.black, fontSize: 30),
+        ),
+        TextSpan(
+          text: '.org',
+          style: TextStyle(color: backgroundColor, fontSize: 30),
+        ),
+      ]),
     );
   }
 

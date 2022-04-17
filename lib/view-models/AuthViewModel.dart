@@ -91,7 +91,7 @@ class AuthViewModel extends ChangeNotifier {
         await updateAuthStatus();
       }
     } on DioError catch (error) {
-      displayAlertModal(context, error.response.data['message']);
+      displayAlertModal(context, error.response?.data['message']);
     }
     setLoginLoading = false;
     //make request and notify
@@ -112,7 +112,7 @@ class AuthViewModel extends ChangeNotifier {
                     )));
       }
     } on DioError catch (error) {
-      displayAlertModal(context, error.response.data['message']);
+      displayAlertModal(context, error.response?.data['message']);
       setRegisterLoading = false;
       throw error;
     }
