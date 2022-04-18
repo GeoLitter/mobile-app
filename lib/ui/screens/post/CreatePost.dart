@@ -24,12 +24,40 @@ class CreatePost extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          postViewModel.image != null
-              ? Image.file(postViewModel.image,
-                  width: 120, height: 120, fit: BoxFit.cover)
-              : Text("Loading.."),
-          Container(
-            child: Text("Post"),
+          // postViewModel.image != null
+          //     ? Image.file(postViewModel.image,
+          //         width: 120, height: 120, fit: BoxFit.cover)
+          //     : Text("Loading.."),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: <Widget>[
+                Image.file(postViewModel.image,
+                    width: 150, height: 150, fit: BoxFit.cover),
+                Positioned(
+                  top: -10,
+                  right: -10,
+                  child: InkWell(
+                    onTap: () {
+                      print('delete image from List');
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Colors.grey,
+                      radius: 15,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.close,
+                          size: 15,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
