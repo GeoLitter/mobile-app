@@ -24,60 +24,105 @@ class CreatePost extends StatelessWidget {
         elevation: 0,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: <Widget>[
-                  Image.file(postViewModel.image,
-                      width: 150, height: 150, fit: BoxFit.cover),
-                  Positioned(
-                    top: -10,
-                    right: -10,
-                    child: InkWell(
-                      onTap: () {
-                        print('delete image from List');
-                      },
-                      child: CircleAvatar(
-                        backgroundColor: Colors.grey,
-                        radius: 15,
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.close,
-                            size: 15,
-                            color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: <Widget>[
+                      Image.file(postViewModel.image,
+                          width: 150, height: 150, fit: BoxFit.cover),
+                      Positioned(
+                        top: -10,
+                        right: -10,
+                        child: InkWell(
+                          onTap: () {
+                            print('delete image from List');
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            radius: 15,
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.close,
+                                size: 15,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {},
+                            ),
                           ),
-                          onPressed: () {},
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                //hastags - auto generated
+                //title - auto generated
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.title_outlined),
+                      hintText: 'Title',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                //description -input text
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.description),
+                      hintText: 'Description',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                //date captured - date picker
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                    onTap: (() async {
+                      showDatePicker(
+                          context: context,
+                          initialDate: DateTime(2019, 8),
+                          firstDate: DateTime(2019, 8),
+                          lastDate: DateTime(2100));
+                    }),
+                    child: AbsorbPointer(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.date_range),
+                          hintText: 'Date',
+                          border: OutlineInputBorder(),
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
-            //hastags - auto generated
-            //title - auto generated
-            //description -input text
-            //date captured - date picker
-            //location - map instance
-            //geoprivacy - open, obscured, private
-            //hotspot
-            //upload button
-            SafeArea(
-              child: Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width * 0.85,
-                child: TextButton(
-                  style: flatButtonStyle,
-                  onPressed: () async {},
-                  child: Text("Submit"),
                 ),
-              ),
+                //location - map instance
+                //geoprivacy - open, obscured, private
+                //hotspot
+                //upload button
+                SafeArea(
+                  child: Container(
+                    height: 60,
+                    width: MediaQuery.of(context).size.width * 0.85,
+                    child: TextButton(
+                      style: flatButtonStyle,
+                      onPressed: () async {},
+                      child: Text("Submit"),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
