@@ -88,14 +88,16 @@ class CreatePost extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
                     onTap: (() async {
-                      showDatePicker(
+                      final DateTime? picked = await showDatePicker(
                           context: context,
                           initialDate: postViewModel.selectedDate,
                           firstDate: DateTime(2019, 8),
                           lastDate: DateTime(2100));
+                      postViewModel.setDate(picked);
                     }),
                     child: AbsorbPointer(
                       child: TextField(
+                        controller: postViewModel.dateController,
                         decoration: InputDecoration(
                           icon: Icon(Icons.date_range),
                           hintText: 'Date',
