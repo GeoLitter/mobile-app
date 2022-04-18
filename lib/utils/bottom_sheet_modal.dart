@@ -79,7 +79,16 @@ void displayBottomSheet(BuildContext context) {
                           Icons.image_search,
                           size: 50,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          try {
+                            final image = ImagePicker()
+                                .pickImage(source: ImageSource.gallery);
+                            if (image == null) return;
+                          } on PlatformException catch (e) {
+                            print(e);
+                          }
+                          ;
+                        },
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
