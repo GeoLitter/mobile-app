@@ -108,8 +108,59 @@ class CreatePost extends StatelessWidget {
                   ),
                 ),
                 //location - map instance
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                    onTap: () {
+                      print("load map bottom sheet");
+                    },
+                    child: AbsorbPointer(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.location_on),
+                          hintText: 'No Location',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 //geoprivacy - open, obscured, private
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                    onTap: () {
+                      print("load GeoPrivacy bottom sheet");
+                    },
+                    child: AbsorbPointer(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.privacy_tip_outlined),
+                          hintText: 'Geoprivacy',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 //hotspot
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                    onTap: () {
+                      print("load Cluster Selection");
+                    },
+                    child: AbsorbPointer(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.data_array),
+                          hintText: 'Add to a cluster',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 //upload button
                 SafeArea(
                   child: Container(
