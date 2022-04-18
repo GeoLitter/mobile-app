@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/ui/screens/home/home.dart';
 import 'package:mobile/utils/bottom_sheet_modal.dart';
 import 'package:mobile/view-models/PostViewModel.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,10 @@ class CreatePost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final postViewModel = Provider.of<PostViewModel>(context, listen: true);
+    //close bottom sheet modal if screen contains image
+    if (postViewModel.image != null) {
+      Navigator.pop(context);
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -19,6 +24,11 @@ class CreatePost extends StatelessWidget {
         ),
         leading: BackButton(
           color: Colors.black54,
+          onPressed: () {
+            //ensures bottom sheet modal is closed when navigating back
+            Navigator.popUntil(context, (route) => route.isFirst);
+            postViewModel.clearImage();
+          },
         ),
         automaticallyImplyLeading: true,
         backgroundColor: Colors.white,

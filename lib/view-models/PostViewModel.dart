@@ -17,6 +17,8 @@ class PostViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  clearImage() => _image = null;
+
   setDate(DateTime? picked) {
     _selectedDate = picked!;
     _dateController.text = "${picked}";
