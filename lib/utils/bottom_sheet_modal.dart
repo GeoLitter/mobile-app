@@ -61,11 +61,13 @@ void displayBottomSheet(BuildContext context) {
                           Icons.camera_alt_outlined,
                           size: 50,
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           try {
-                            final image = ImagePicker()
+                            final image = await ImagePicker()
                                 .pickImage(source: ImageSource.camera);
                             if (image == null) return;
+                            final tempImage = File(image.path);
+                            postViewModel.setImage(tempImage);
                           } on PlatformException catch (e) {
                             print(e);
                           }
