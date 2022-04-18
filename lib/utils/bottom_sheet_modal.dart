@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mobile/ui/screens/post/CreatePost.dart';
 
 void displayBottomSheet(BuildContext context) {
   showModalBottomSheet(
@@ -32,7 +33,12 @@ void displayBottomSheet(BuildContext context) {
                           Icons.post_add_sharp,
                           size: 50,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CreatePost()));
+                        },
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
