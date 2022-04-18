@@ -1,9 +1,13 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile/ui/screens/post/CreatePost.dart';
+import 'package:mobile/view-models/PostViewModel.dart';
+import 'package:provider/provider.dart';
 
 void displayBottomSheet(BuildContext context) {
+  final postViewModel = Provider.of<PostViewModel>(context, listen: false);
   showModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: context,
@@ -85,11 +89,13 @@ void displayBottomSheet(BuildContext context) {
                           Icons.image_search,
                           size: 50,
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           try {
-                            final image = ImagePicker()
+                            final image = await ImagePicker()
                                 .pickImage(source: ImageSource.gallery);
                             if (image == null) return;
+                            final tempImage = File(image.path);
+                            postViewModel.setImage(tempImage);
                           } on PlatformException catch (e) {
                             print(e);
                           }

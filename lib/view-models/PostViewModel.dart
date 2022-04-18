@@ -8,6 +8,8 @@ class PostViewModel extends ChangeNotifier {
   get image => _image;
 
   setImage(File image) {
+    print("Image: $image");
     _image = image;
+    notifyListeners();
   }
 }
