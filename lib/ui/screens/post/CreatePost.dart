@@ -90,7 +90,7 @@ class CreatePost extends StatelessWidget {
                     onTap: (() async {
                       showDatePicker(
                           context: context,
-                          initialDate: DateTime(2019, 8),
+                          initialDate: postViewModel.selectedDate,
                           firstDate: DateTime(2019, 8),
                           lastDate: DateTime(2100));
                     }),
