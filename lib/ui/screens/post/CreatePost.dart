@@ -24,10 +24,6 @@ class CreatePost extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // postViewModel.image != null
-          //     ? Image.file(postViewModel.image,
-          //         width: 120, height: 120, fit: BoxFit.cover)
-          //     : Text("Loading.."),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Stack(
