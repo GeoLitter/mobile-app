@@ -3,7 +3,7 @@ import 'package:mobile/ui/screens/post/PostDetails.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:provider/provider.dart';
 
-import '../../../../view-models/PostViewModel.dart';
+import '../../../../view-models/PostsViewModel.dart';
 
 class PostView extends StatelessWidget {
   final int index;
@@ -11,7 +11,7 @@ class PostView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final postViewModel = Provider.of<PostViewModel>(context, listen: true);
+    final postViewModel = Provider.of<PostsViewModel>(context, listen: true);
     return InkWell(
       onTap: () {
         Navigator.push(

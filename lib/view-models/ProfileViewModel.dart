@@ -32,7 +32,7 @@ class ProfileViewModel extends ChangeNotifier {
         setLoading = false;
       }
     } on DioError catch (error) {
-      displayAlertModal(context, error.response.data['message']);
+      displayAlertModal(context, error.response?.data['message']);
     }
   }
 }

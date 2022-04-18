@@ -22,8 +22,8 @@ class ApiService {
       ..options.headers = {
         'Content-Type': 'application/json; charset=UTF-8',
       };
-    _dio.interceptors
-        .add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
+    _dio.interceptors.add(InterceptorsWrapper(onRequest:
+        (RequestOptions options, RequestInterceptorHandler handler) async {
       final accessToken = await _secureLocalStorage.readSecureData('token');
       var customHeaders = {'Authorization': "Bearer $accessToken"};
       print("Access Token: $accessToken");
@@ -31,22 +31,27 @@ class ApiService {
       // if (await NoInternetException().isConnectedToInternet() == false) {
       //   throw SocketException("No Internet");
       // }
-      return options;
-    }, onError: (DioError error) async {
-      if (error.response.statusCode == 401) {
+      return handler.next(options);
+    }, onError: (DioError error, ErrorInterceptorHandler handler) async {
+      if (error.response?.statusCode == 401) {
         final refreskToken =
             await _secureLocalStorage.readSecureData('refresh_token');
         if (refreskToken != null || refreshToken != '') {
           await refreshToken();
-          RequestOptions options = error.response.request;
-          final accessToken = await _secureLocalStorage.readSecureData('token');
-          var customHeaders = {'Authorization': "Bearer $accessToken"};
-          options.headers.addAll(customHeaders);
-          return await _dio.request(options.path, options: options);
+          return handler.resolve(await _retry(error.requestOptions));
         }
       }
       throw error;
     }));
+  }
+
+  Future<Response<dynamic>> _retry(RequestOptions requestOptions) async {
+    final options =
+        Options(method: requestOptions.method, headers: requestOptions.headers);
+    // final accessToken = await _secureLocalStorage.readSecureData('token');
+    // var customHeaders = {'Authorization': "Bearer $accessToken"};
+    // options.headers?.addAll(customHeaders);
+    return _dio.request(requestOptions.path, options: options);
   }
 
   Future<dynamic> get(

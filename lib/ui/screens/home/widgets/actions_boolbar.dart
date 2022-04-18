@@ -2,7 +2,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/ui/screens/user/UserDetails.dart';
-import 'package:mobile/view-models/PostViewModel.dart';
+import 'package:mobile/view-models/PostsViewModel.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:provider/provider.dart';
 
@@ -27,7 +27,7 @@ class ActionsToolbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final postViewModel = Provider.of<PostViewModel>(context, listen: true);
+    final postViewModel = Provider.of<PostsViewModel>(context, listen: true);
     return Positioned(
       bottom: 70,
       right: 0,
@@ -101,7 +101,7 @@ class ActionsToolbar extends StatelessWidget {
   }
 
   Widget _getProfilePicture(context, index) {
-    final postViewModel = Provider.of<PostViewModel>(context, listen: true);
+    final postViewModel = Provider.of<PostsViewModel>(context, listen: true);
     return Positioned(
         left: (ActionWidgetSize / 2) - (ProfileImageSize / 2),
         child: CircleAvatar(

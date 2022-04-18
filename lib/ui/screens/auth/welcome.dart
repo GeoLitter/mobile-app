@@ -2,8 +2,6 @@ import 'package:mobile/ui/constants/theme_colors.dart';
 import 'package:mobile/ui/screens/auth/sign_in.dart';
 import 'package:mobile/ui/screens/auth/sign_up.dart';
 import 'package:flutter/material.dart';
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:google_fonts/google_fonts.dart';
 
 class WelcomePage extends StatefulWidget {
   WelcomePage({Key? key, required this.title}) : super(key: key);
@@ -104,23 +102,16 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget _title() {
     return RichText(
       textAlign: TextAlign.center,
-      text: TextSpan(
-          text: 'Eco',
-          style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.headline4,
-            fontSize: 30,
-            fontWeight: FontWeight.w700,
-          ),
-          children: [
-            TextSpan(
-              text: 'Crpt',
-              style: TextStyle(color: Colors.black, fontSize: 30),
-            ),
-            TextSpan(
-              text: '.org',
-              style: TextStyle(color: Colors.white, fontSize: 30),
-            ),
-          ]),
+      text: TextSpan(text: 'Eco', children: [
+        TextSpan(
+          text: 'Crpt',
+          style: TextStyle(color: Colors.black, fontSize: 30),
+        ),
+        TextSpan(
+          text: '.org',
+          style: TextStyle(color: Colors.white, fontSize: 30),
+        ),
+      ]),
     );
   }
 
