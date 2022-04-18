@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/utils/bottom_sheet_modal.dart';
 import 'package:mobile/view-models/PostViewModel.dart';
 import 'package:provider/provider.dart';
 
@@ -31,34 +32,46 @@ class CreatePost extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: <Widget>[
-                      Image.file(postViewModel.image,
-                          width: 150, height: 150, fit: BoxFit.cover),
-                      Positioned(
-                        top: -10,
-                        right: -10,
-                        child: InkWell(
-                          onTap: () {
-                            print('delete image from List');
-                          },
-                          child: CircleAvatar(
-                            backgroundColor: Colors.grey,
-                            radius: 15,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.close,
-                                size: 15,
-                                color: Colors.white,
+                  child: postViewModel.image != null
+                      ? Stack(
+                          clipBehavior: Clip.none,
+                          children: <Widget>[
+                            Image.file(postViewModel.image,
+                                width: 150, height: 150, fit: BoxFit.cover),
+                            Positioned(
+                              top: -10,
+                              right: -10,
+                              child: InkWell(
+                                onTap: () {
+                                  print('delete image from List');
+                                },
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.grey,
+                                  radius: 15,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.close,
+                                      size: 15,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {},
+                                  ),
+                                ),
                               ),
-                              onPressed: () {},
                             ),
+                          ],
+                        )
+                      : IconButton(
+                          iconSize: 100,
+                          icon: const Icon(
+                            Icons.image,
+                            color: Colors.grey,
                           ),
+                          tooltip: 'Add Image',
+                          onPressed: () {
+                            displayBottomSheet(context);
+                          },
                         ),
-                      ),
-                    ],
-                  ),
                 ),
                 //hastags - auto generated
                 //title - auto generated
