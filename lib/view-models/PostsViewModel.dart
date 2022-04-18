@@ -10,7 +10,7 @@ import 'package:mobile/data/repositories/post_repo.dart';
 import '../ui/screens/post/PostDetails.dart';
 import '../utils/alert_info_modal.dart';
 
-class PostViewModel extends ChangeNotifier {
+class PostsViewModel extends ChangeNotifier {
   List? _posts;
   final PostsRepo _postsRepo = PostsRepo();
   bool _isLoading = false;

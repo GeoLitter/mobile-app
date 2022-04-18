@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/ui/screens/AuthWrapper.dart';
 import 'package:mobile/view-models/AuthViewModel.dart';
 import 'package:mobile/view-models/HomeViewModel.dart';
-import 'package:mobile/view-models/PostViewModel.dart';
+import 'package:mobile/view-models/PostsViewModel.dart';
 import 'package:mobile/view-models/ProfileViewModel.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:provider/provider.dart';
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AuthViewModel>(create: (_) => AuthViewModel()),
         ChangeNotifierProvider<ProfileViewModel>(
             create: (_) => ProfileViewModel()),
-        ChangeNotifierProvider<PostViewModel>(create: (_) => PostViewModel()),
+        ChangeNotifierProvider<PostsViewModel>(create: (_) => PostsViewModel()),
         ChangeNotifierProvider<HomeViewModel>(create: (_) => HomeViewModel())
       ],
       child: MaterialApp(

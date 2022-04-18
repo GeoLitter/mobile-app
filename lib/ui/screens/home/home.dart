@@ -4,7 +4,7 @@ import 'package:mobile/ui/screens/home/widgets/map_view.dart';
 import 'package:mobile/ui/screens/home/widgets/post_view.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/view-models/HomeViewModel.dart';
-import 'package:mobile/view-models/PostViewModel.dart';
+import 'package:mobile/view-models/PostsViewModel.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:provider/provider.dart';
 
@@ -22,7 +22,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
     super.initState();
-    final postViewModel = Provider.of<PostViewModel>(context, listen: false);
+    final postViewModel = Provider.of<PostsViewModel>(context, listen: false);
     postViewModel.getPostData(context);
   }
 
@@ -83,14 +83,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       ));
 
   Widget middleSection(_tabController, context) => Expanded(
-        child: Provider.of<PostViewModel>(context, listen: true).isLoading
+        child: Provider.of<PostsViewModel>(context, listen: true).isLoading
             ? Container(
                 child: TabBarView(
                   controller: _tabController,
                   children: [
                     Provider.of<HomeViewModel>(context, listen: true).isMap
                         ? ListView.builder(
-                            itemCount: Provider.of<PostViewModel>(context,
+                            itemCount: Provider.of<PostsViewModel>(context,
                                     listen: true)
                                 .posts
                                 ?.length,
