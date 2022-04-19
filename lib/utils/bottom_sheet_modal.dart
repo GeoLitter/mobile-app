@@ -38,10 +38,12 @@ void displayBottomSheet(BuildContext context) {
                           size: 50,
                         ),
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CreatePost()));
+                          if (postViewModel.image == null) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CreatePost()));
+                          }
                         },
                       ),
                       Padding(
@@ -68,6 +70,12 @@ void displayBottomSheet(BuildContext context) {
                             if (image == null) return;
                             final tempImage = File(image.path);
                             postViewModel.setImage(tempImage);
+                            //todo: make this better by using the name route, and ensuring that modal closes when
+                            //selecting images instead of rendering screen again
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CreatePost()));
                           } on PlatformException catch (e) {
                             print(e);
                           }
@@ -98,6 +106,10 @@ void displayBottomSheet(BuildContext context) {
                             if (image == null) return;
                             final tempImage = File(image.path);
                             postViewModel.setImage(tempImage);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CreatePost()));
                           } on PlatformException catch (e) {
                             print(e);
                           }

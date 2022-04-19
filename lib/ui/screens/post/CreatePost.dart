@@ -13,9 +13,9 @@ class CreatePost extends StatelessWidget {
   Widget build(BuildContext context) {
     final postViewModel = Provider.of<PostViewModel>(context, listen: true);
     //close bottom sheet modal if screen contains image
-    if (postViewModel.image != null) {
-      Navigator.pop(context);
-    }
+    // if (postViewModel.image != null) {
+    //   Navigator.pop(context);
+    // }
     return Scaffold(
       appBar: AppBar(
         title: Text(
