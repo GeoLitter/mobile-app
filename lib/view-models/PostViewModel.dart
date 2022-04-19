@@ -17,7 +17,11 @@ class PostViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  clearImage() => _image = null;
+  clearImage() {
+    _image = null;
+    notifyListeners();
+    print("Hello World");
+  }
 
   setDate(DateTime? picked) {
     _selectedDate = picked!;

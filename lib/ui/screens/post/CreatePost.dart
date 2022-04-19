@@ -51,21 +51,18 @@ class CreatePost extends StatelessWidget {
                             Positioned(
                               top: -10,
                               right: -10,
-                              child: InkWell(
-                                onTap: () {
-                                  print('delete image from List');
-                                },
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.grey,
-                                  radius: 15,
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.close,
-                                      size: 15,
-                                      color: Colors.white,
-                                    ),
-                                    onPressed: () {},
+                              child: CircleAvatar(
+                                backgroundColor: Colors.grey,
+                                radius: 15,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.close,
+                                    size: 15,
+                                    color: Colors.white,
                                   ),
+                                  onPressed: () {
+                                    postViewModel.clearImage();
+                                  },
                                 ),
                               ),
                             ),
