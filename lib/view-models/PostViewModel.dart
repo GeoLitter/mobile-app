@@ -5,15 +5,29 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/data/repositories/post_repo.dart';
 
+import '../data/services/secure_storage_service.dart';
 import '../utils/alert_info_modal.dart';
 
 class PostViewModel extends ChangeNotifier {
   final PostsRepo _postsRepo = PostsRepo();
+  final SecureLocalStorage _secureLocalStorage = SecureLocalStorage();
   File? _image;
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _description = TextEditingController();
+  TextEditingController _tagsController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
+  String _geoPrivacy = "private";
+  String _clusterId = "testid";
+  String lat = "25.0330";
+  String long = "121.5654";
   DateTime _selectedDate = DateTime.now();
   bool _isUploading = false;
 
+  get name => _titleController;
+  get description => _description;
+  get tags => _tagsController;
+  get geoPrivacy => _geoPrivacy;
+  get clusterId => _clusterId;
   get image => _image;
   get selectedDate => _selectedDate;
   get dateController => _dateController;
@@ -45,7 +59,8 @@ class PostViewModel extends ChangeNotifier {
     setIsUploading = true;
     try {
       print("About to create post");
-      final Response response = await _postsRepo.createPost();
+      final Response response = await _postsRepo.createPost(
+          name, description, lat, long, selectedDate, geoPrivacy, clusterId);
       if (response.statusCode == 200 || response.statusCode == 201) {
         print(response.data);
         setIsUploading = false;
