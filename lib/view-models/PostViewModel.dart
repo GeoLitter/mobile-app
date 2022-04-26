@@ -23,8 +23,8 @@ class PostViewModel extends ChangeNotifier {
   DateTime _selectedDate = DateTime.now();
   bool _isUploading = false;
 
-  get name => _titleController;
-  get description => _description;
+  get name => _titleController.text;
+  get description => _description.text;
   get tags => _tagsController;
   get geoPrivacy => _geoPrivacy;
   get clusterId => _clusterId;
@@ -59,13 +59,15 @@ class PostViewModel extends ChangeNotifier {
     setIsUploading = true;
     try {
       print("About to create post");
-      final Response response = await _postsRepo.createPost(
-          name, description, lat, long, selectedDate, geoPrivacy, clusterId);
+      Response response = await _postsRepo.createPost(
+          "name", "description", lat, long, "date", geoPrivacy, clusterId);
+      print("Reponse: $response");
       if (response.statusCode == 200 || response.statusCode == 201) {
         print(response.data);
         setIsUploading = false;
       }
     } on DioError catch (error) {
+      print("Error: $error");
       displayAlertModal(context, error.response?.data['message']);
       setIsUploading = false;
       throw error;

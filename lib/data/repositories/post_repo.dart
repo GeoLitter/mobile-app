@@ -20,7 +20,7 @@ class PostsRepo {
   }
 
   Future getPostById(String id) async {
-    await _apiService.get('/$id');
+    return await _apiService.get('/$id');
   }
 
   Future createPost(
@@ -32,17 +32,22 @@ class PostsRepo {
     String geoprivacy,
     String clusterId,
   ) async {
-    String profileId = await _secureLocalStorage.readSecureData('profileId');
-    await _apiService.post('/', data: {
-      name,
-      description,
-      lat,
-      long,
-      date,
-      geoprivacy,
-      clusterId,
-      profileId
-    });
+    try {
+      String profileId = await _secureLocalStorage.readSecureData('profileId');
+      return await _apiService.post('/', data: {
+        "name": name,
+        "description": description,
+        "lat": lat,
+        "long": long,
+        "date": date,
+        "geoprivacy": geoprivacy,
+        "clusterId": clusterId,
+        "profileId": profileId
+      });
+    } catch (e) {
+      print("ANother Error $e");
+      throw e;
+    }
   }
 
   Future likePost(String id) async {
