@@ -182,6 +182,7 @@ class CreatePost extends StatelessWidget {
                   ),
                 ),
                 //upload button
+                postViewModel.buildProgress(),
                 SafeArea(
                   child: Container(
                     height: 60,

@@ -1,7 +1,6 @@
-import 'dart:ffi';
 import 'dart:io';
-
 import 'package:dio/dio.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/data/repositories/post_repo.dart';
 
@@ -11,6 +10,7 @@ import '../utils/alert_info_modal.dart';
 class PostViewModel extends ChangeNotifier {
   final PostsRepo _postsRepo = PostsRepo();
   final SecureLocalStorage _secureLocalStorage = SecureLocalStorage();
+  UploadTask? uploadTask;
   File? _image;
   TextEditingController _titleController = TextEditingController();
   TextEditingController _description = TextEditingController();
@@ -59,13 +59,25 @@ class PostViewModel extends ChangeNotifier {
     setIsUploading = true;
     try {
       print("About to create post");
-      Response response = await _postsRepo.createPost(
-          "name", "description", lat, long, "date", geoPrivacy, clusterId);
-      print("Reponse: $response");
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        print(response.data);
-        setIsUploading = false;
-      }
+      final path = 'files/${DateTime.now()}';
+      final file = File(_image!.path);
+      final ref = FirebaseStorage.instance.ref().child(path);
+      uploadTask = ref.putFile(file);
+
+      final snapshot = await uploadTask!.whenComplete(() => {});
+
+      final imageUrl = await snapshot.ref.getDownloadURL();
+      print("Download Link: $imageUrl");
+      // Response response = await _postsRepo.createPost(
+      //     "name", "description", lat, long, "date", geoPrivacy, clusterId);
+      // print("Reponse: $response");
+      // if (response.statusCode == 503) {
+      //   displayAlertModal(context, "Not formatted correctly");
+      // }
+      // if (response.statusCode == 200 || response.statusCode == 201) {
+      //   print(response.data);
+      //   setIsUploading = false;
+      // }
     } on DioError catch (error) {
       print("Error: $error");
       displayAlertModal(context, error.response?.data['message']);
@@ -73,4 +85,37 @@ class PostViewModel extends ChangeNotifier {
       throw error;
     }
   }
+
+  Widget buildProgress() => StreamBuilder<TaskSnapshot>(
+        stream: uploadTask?.snapshotEvents,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final data = snapshot.data!;
+            double progress = data.bytesTransferred / data.totalBytes;
+            return SizedBox(
+              height: 50,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  LinearProgressIndicator(
+                    value: progress,
+                    backgroundColor: Colors.grey,
+                    color: Colors.green,
+                  ),
+                  Center(
+                    child: Text(
+                      '${(100 * progress).roundToDouble()}%',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  )
+                ],
+              ),
+            );
+          } else {
+            return const SizedBox(
+              height: 50,
+            );
+          }
+        },
+      );
 }

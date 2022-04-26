@@ -32,22 +32,9 @@ class PostsRepo {
     String geoprivacy,
     String clusterId,
   ) async {
-    try {
-      String profileId = await _secureLocalStorage.readSecureData('profileId');
-      return await _apiService.post('/', data: {
-        "name": name,
-        "description": description,
-        "lat": lat,
-        "long": long,
-        "date": date,
-        "geoprivacy": geoprivacy,
-        "clusterId": clusterId,
-        "profileId": profileId
-      });
-    } catch (e) {
-      print("ANother Error $e");
-      throw e;
-    }
+    String profileId = await _secureLocalStorage.readSecureData('profileId');
+    return await _apiService.post('/',
+        data: {"name": "Post example", "description": "description"});
   }
 
   Future likePost(String id) async {
