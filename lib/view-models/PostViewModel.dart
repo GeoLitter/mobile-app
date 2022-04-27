@@ -22,6 +22,7 @@ class PostViewModel extends ChangeNotifier {
   String long = "121.5654";
   DateTime _selectedDate = DateTime.now();
   bool _isUploading = false;
+  bool _isPosting = false;
 
   get name => _titleController.text;
   get description => _description.text;
@@ -32,6 +33,7 @@ class PostViewModel extends ChangeNotifier {
   get selectedDate => _selectedDate;
   get dateController => _dateController;
   get isUploading => _isUploading;
+  get isPosting => _isPosting;
 
   setImage(File image) {
     print("Image: $image");
@@ -55,19 +57,29 @@ class PostViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  set setIsPosting(bool isPosting) {
+    _isPosting = isPosting;
+    notifyListeners();
+  }
+
   Future createPost(context) async {
-    setIsUploading = true;
     try {
       print("About to create post");
+      setIsUploading = true;
       final path = 'files/${DateTime.now()}';
       final file = File(_image!.path);
       final ref = FirebaseStorage.instance.ref().child(path);
       uploadTask = ref.putFile(file);
 
-      final snapshot = await uploadTask!.whenComplete(() => {});
+      final snapshot = await uploadTask!
+          .whenComplete(() => {setIsPosting = true, setIsUploading = false});
 
       final imageUrl = await snapshot.ref.getDownloadURL();
       print("Download Link: $imageUrl");
+      Future.delayed(const Duration(milliseconds: 2000), () {
+        setIsPosting = false;
+        Navigator.pop(context);
+      });
       // Response response = await _postsRepo.createPost(
       //     "name", "description", lat, long, "date", geoPrivacy, clusterId);
       // print("Reponse: $response");
@@ -93,21 +105,25 @@ class PostViewModel extends ChangeNotifier {
             final data = snapshot.data!;
             double progress = data.bytesTransferred / data.totalBytes;
             return SizedBox(
-              height: 50,
-              child: Stack(
-                fit: StackFit.expand,
+              height: 100,
+              child: Column(
                 children: [
-                  LinearProgressIndicator(
-                    value: progress,
-                    backgroundColor: Colors.grey,
-                    color: Colors.green,
-                  ),
+                  if (isUploading)
+                    LinearProgressIndicator(
+                      value: progress,
+                      backgroundColor: Colors.grey,
+                      color: Colors.blue,
+                    ),
+                  if (isPosting)
+                    Row(
+                      children: [CircularProgressIndicator(), Text("Posting")],
+                    ),
                   Center(
                     child: Text(
                       '${(100 * progress).roundToDouble()}%',
                       style: const TextStyle(color: Colors.white),
                     ),
-                  )
+                  ),
                 ],
               ),
             );
