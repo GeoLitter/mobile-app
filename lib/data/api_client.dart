@@ -113,6 +113,7 @@ class ApiService {
     } on FormatException catch (_) {
       throw FormatException("Unable to process the data");
     } catch (e) {
+      print("Error: $e");
       throw e;
     }
   }

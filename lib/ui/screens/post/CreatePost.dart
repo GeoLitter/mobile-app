@@ -191,7 +191,7 @@ class CreatePost extends StatelessWidget {
                       style: flatButtonStyle,
                       onPressed: () async {
                         postViewModel.createPost(context);
-                        displayLoadingModal(context, "Uploading...");
+                        displayLoadingModal(context, "Upload Status");
                       },
                       child: Text("Submit"),
                     ),
