@@ -80,6 +80,7 @@ class PostViewModel extends ChangeNotifier {
     try {
       print("About to create post");
       setIsUploading = true;
+      setHasUploaded = false;
       final path = 'files/${DateTime.now()}';
       final file = File(_image!.path);
       final ref = FirebaseStorage.instance.ref().child(path);
