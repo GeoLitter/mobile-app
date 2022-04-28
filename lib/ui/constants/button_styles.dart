@@ -10,6 +10,16 @@ final ButtonStyle flatButtonStyle = TextButton.styleFrom(
   ),
 );
 
+final ButtonStyle disabledFlatButtonStyle = TextButton.styleFrom(
+  backgroundColor: Colors.grey,
+  primary: Colors.black,
+  // minimumSize: Size(300, 50),
+  padding: EdgeInsets.symmetric(horizontal: 16.0),
+  shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(19)),
+  ),
+);
+
 final ButtonStyle flatButtonStyleNoRadius = TextButton.styleFrom(
     backgroundColor: Colors.blue,
     primary: Colors.white,
