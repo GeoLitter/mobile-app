@@ -23,7 +23,49 @@ void displayLoadingModal(BuildContext context, infoMessage) {
                     "$infoMessage",
                     textAlign: TextAlign.center,
                   ),
-                  postViewModel.buildProgress()
+                  Consumer<PostViewModel>(
+                    builder: (context, value, child) => Visibility(
+                        visible: value.isUploading,
+                        child: postViewModel.buildProgress()),
+                  ),
+                  Consumer<PostViewModel>(
+                    builder: (context, value, child) => Visibility(
+                      visible: value.isPosting,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircularProgressIndicator(),
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Text("Posting"),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Consumer<PostViewModel>(
+                    builder: (context, value, child) => Visibility(
+                      visible: value.hasUploaded,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.check,
+                            color: Colors.green,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Text(
+                              "Success!",
+                              style: TextStyle(color: Colors.green),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),

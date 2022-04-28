@@ -85,14 +85,17 @@ class PostViewModel extends ChangeNotifier {
       final imageUrl = await snapshot.ref.getDownloadURL();
       print("Download Link: $imageUrl");
 
-      Response response = await _authRepo.apiTest();
+      final Response response = await _authRepo.apiTest();
+
       if (response.statusCode == 200 || response.statusCode == 201) {
         print("TestAPi: $response");
         setIsPosting = false;
         setHasUploaded = true;
-        //todo: create a method to clear all input fields instead of just image
         clearImage();
-        Navigator.pop(context);
+        Future.delayed(Duration(milliseconds: 1000), () {
+          //close upload modal after success
+          Navigator.pop(context);
+        });
       }
       // Response response = await _postsRepo.createPost(
       //     "name", "description", lat, long, "date", geoPrivacy, clusterId);
@@ -114,75 +117,37 @@ class PostViewModel extends ChangeNotifier {
     }
   }
 
+// Todo: Remove success and loading indicators from stream builder
   Widget buildProgress() => StreamBuilder<TaskSnapshot>(
         stream: uploadTask?.snapshotEvents,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final data = snapshot.data!;
             double progress = data.bytesTransferred / data.totalBytes;
-            return SizedBox(
-              height: 150,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  if (isUploading)
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          LinearProgressIndicator(
-                            value: progress,
-                            backgroundColor: Colors.grey,
-                            color: Colors.blue,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                              child: Text(
-                                '${(100 * progress).roundToDouble()}%',
-                                style: const TextStyle(color: Colors.green),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    LinearProgressIndicator(
+                      value: progress,
+                      backgroundColor: Colors.grey,
+                      color: Colors.blue,
                     ),
-                  if (isPosting)
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircularProgressIndicator(),
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Text("Posting"),
-                          )
-                        ],
-                      ),
-                    ),
-                  if (hasUploaded)
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.check,
-                            color: Colors.green,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Text(
-                              "Success!",
-                              style: TextStyle(color: Colors.green),
-                            ),
-                          )
-                        ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          '${(100 * progress).roundToDouble()}%',
+                          style: const TextStyle(color: Colors.green),
+                        ),
                       ),
                     )
-                ],
-              ),
+                  ],
+                )
+              ],
             );
           } else {
             return const SizedBox(
