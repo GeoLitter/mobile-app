@@ -110,6 +110,8 @@ class ApiService {
       //    await onRefreshToken();
       // }
       return response;
+    } on SocketException catch (e) {
+      throw e;
     } on FormatException catch (_) {
       throw FormatException("Unable to process the data");
     } catch (e) {

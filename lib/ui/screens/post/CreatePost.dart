@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/ui/components/loading_modal.dart';
+import 'package:mobile/ui/components/mapModalPicker.dart';
 import 'package:mobile/ui/screens/home/home.dart';
 import 'package:mobile/utils/bottom_sheet_modal.dart';
 import 'package:mobile/view-models/PostViewModel.dart';
@@ -133,7 +134,7 @@ class CreatePost extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
                     onTap: () {
-                      print("load map bottom sheet");
+                      displayMapModalPicker(context);
                     },
                     child: AbsorbPointer(
                       child: TextField(

@@ -92,7 +92,8 @@ class PostViewModel extends ChangeNotifier {
       print("Download Link: $imageUrl");
 
       final Response response = await _authRepo.apiTest();
-
+      final Response postResponse = await _postsRepo.createPost();
+      print("Response: $postResponse");
       if (response.statusCode == 200 || response.statusCode == 201) {
         print("TestAPi: $response");
         setIsPosting = false;
@@ -103,13 +104,6 @@ class PostViewModel extends ChangeNotifier {
           Navigator.pop(context);
         });
       }
-      // Response response = await _postsRepo.createPost(
-      //     "name", "description", lat, long, "date", geoPrivacy, clusterId);
-      // print("Reponse: $response");
-      // if (response.statusCode == 200 || response.statusCode == 201) {
-      //   print(response.data);
-      //   setIsUploading = false;
-      // }
     } on DioError catch (error) {
       print("Error: $error");
       setIsPosting = false;
