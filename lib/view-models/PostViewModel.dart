@@ -71,6 +71,11 @@ class PostViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool canSubmit() {
+    if (_image != null) return true;
+    return false;
+  }
+
   Future createPost(context) async {
     try {
       print("About to create post");
@@ -100,9 +105,6 @@ class PostViewModel extends ChangeNotifier {
       // Response response = await _postsRepo.createPost(
       //     "name", "description", lat, long, "date", geoPrivacy, clusterId);
       // print("Reponse: $response");
-      // if (response.statusCode == 503) {
-      //   displayAlertModal(context, "Not formatted correctly");
-      // }
       // if (response.statusCode == 200 || response.statusCode == 201) {
       //   print(response.data);
       //   setIsUploading = false;
@@ -117,7 +119,6 @@ class PostViewModel extends ChangeNotifier {
     }
   }
 
-// Todo: Remove success and loading indicators from stream builder
   Widget buildProgress() => StreamBuilder<TaskSnapshot>(
         stream: uploadTask?.snapshotEvents,
         builder: (context, snapshot) {

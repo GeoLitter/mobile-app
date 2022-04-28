@@ -188,11 +188,15 @@ class CreatePost extends StatelessWidget {
                     height: 60,
                     width: MediaQuery.of(context).size.width * 0.85,
                     child: TextButton(
-                      style: flatButtonStyle,
-                      onPressed: () async {
-                        postViewModel.createPost(context);
-                        displayLoadingModal(context, "Upload Status");
-                      },
+                      style: !postViewModel.canSubmit()
+                          ? disabledFlatButtonStyle
+                          : flatButtonStyle,
+                      onPressed: !postViewModel.canSubmit()
+                          ? null
+                          : () async {
+                              postViewModel.createPost(context);
+                              displayLoadingModal(context, "Upload Status");
+                            },
                       child: Text("Submit"),
                     ),
                   ),
