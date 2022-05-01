@@ -8,7 +8,7 @@ import '../utils/alert_info_modal.dart';
 
 class PostDetailsViewModel extends ChangeNotifier {
   final PostsRepo _postsRepo = PostsRepo();
-  bool _isLoading = true;
+  bool _isLoading = false;
   Map<String, dynamic>? _postDetails;
 
   //getters
@@ -25,8 +25,9 @@ class PostDetailsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getProfileData(context, id) async {
+  Future getPostDetails(context, id) async {
     try {
+      setLoading = true;
       Response response = await _postsRepo.getPostById(id);
       if (response.statusCode == 200 || response.statusCode == 201) {
         setPostDetails(response.data['data']);
