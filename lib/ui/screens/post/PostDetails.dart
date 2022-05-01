@@ -4,6 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import "package:latlong/latlong.dart" as latLng;
 import 'package:mobile/ui/components/comments_bottomsheet.dart';
+import 'package:mobile/ui/components/postInfoBottomSheetModal.dart';
 import 'package:mobile/view-models/PostDetailsViewModel.dart';
 import 'package:provider/provider.dart';
 
@@ -95,7 +96,9 @@ class _PostDetailsState extends State<PostDetails> {
                           Icons.info_outline,
                           size: 20,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          displayPostInfoBottomSheet(context);
+                        },
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
