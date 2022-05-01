@@ -194,17 +194,17 @@ class _PostDetailsState extends State<PostDetails> {
                     Column(
                       children: [
                         CircleAvatar(
-                          backgroundColor: Colors.white,
+                          backgroundColor: Colors.red,
                           radius: 20,
                           child: Icon(
-                            Icons.check_circle,
+                            Icons.close_outlined,
                             size: 40,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'Unresolved',
+                            'Resolving',
                             style: TextStyle(fontSize: 12),
                           ),
                         )
@@ -222,17 +222,17 @@ class _PostDetailsState extends State<PostDetails> {
                     Column(
                       children: [
                         CircleAvatar(
-                          backgroundColor: Colors.white,
+                          backgroundColor: Colors.red,
                           radius: 20,
                           child: Icon(
-                            Icons.check_circle,
+                            Icons.close_rounded,
                             size: 40,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('Unresolved',
-                              style: TextStyle(fontSize: 12)),
+                          child:
+                              Text('Resovled', style: TextStyle(fontSize: 12)),
                         )
                       ],
                     )
