@@ -4,12 +4,34 @@ import 'package:flutter_map/flutter_map.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import "package:latlong/latlong.dart" as latLng;
 import 'package:mobile/ui/components/comments_bottomsheet.dart';
+import 'package:mobile/ui/components/postInfoBottomSheetModal.dart';
+import 'package:mobile/view-models/PostDetailsViewModel.dart';
+import 'package:provider/provider.dart';
 
-class PostDetails extends StatelessWidget {
-  const PostDetails({Key? key}) : super(key: key);
+class PostDetails extends StatefulWidget {
+  final String postId;
+  const PostDetails(this.postId, {Key? key}) : super(key: key);
+
+  @override
+  State<PostDetails> createState() => _PostDetailsState();
+}
+
+class _PostDetailsState extends State<PostDetails> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final postDetailsViewModel =
+        Provider.of<PostDetailsViewModel>(context, listen: false);
+    postDetailsViewModel.getPostDetails(context, widget.postId);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final postDetailsViewModel =
+        Provider.of<PostDetailsViewModel>(context, listen: true);
+    final post = postDetailsViewModel.postDetails;
+    print(post);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -41,17 +63,22 @@ class PostDetails extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(4.0),
-                    child: Text("@lmanzanero"),
+                    child: postDetailsViewModel.isLoading
+                        ? Text('loading...')
+                        : Text("@${post['profile']['handle'] ?? 'loading...'}"),
                   ),
-                  Text("22/04/12")
+                  Text(post?['date'] ?? 'loading...')
                 ],
               ),
               //images/images
               Image(
                 height: 400,
                 fit: BoxFit.cover,
-                image: NetworkImage(
-                    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+                image: postDetailsViewModel.isLoading
+                    ? NetworkImage(
+                        'https://www.sfu.ca/~mauricey/iat339/Project4/public_html/img/placeholder.gif')
+                    : NetworkImage(post?['postImage'] ??
+                        'https://cdn1.iconfinder.com/data/icons/business-company-1/500/image-512.png'),
               ),
               //post info actions, comments, share
               Container(
@@ -69,7 +96,9 @@ class PostDetails extends StatelessWidget {
                           Icons.info_outline,
                           size: 20,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          displayPostInfoBottomSheet(context);
+                        },
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -99,31 +128,37 @@ class PostDetails extends StatelessWidget {
               ),
               Container(
                 height: 250,
-                child: FlutterMap(
-                  options: MapOptions(
-                    center: latLng.LatLng(17.1899, -88.4976),
-                    zoom: 5.0,
-                  ),
-                  layers: [
-                    TileLayerOptions(
-                      urlTemplate:
-                          "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                      subdomains: ['a', 'b', 'c'],
-                    ),
-                    MarkerLayerOptions(
-                      markers: [
-                        Marker(
-                          width: 80.0,
-                          height: 80.0,
-                          point: latLng.LatLng(51.5, -0.09),
-                          builder: (ctx) => Container(
-                            child: FlutterLogo(),
-                          ),
+                child: postDetailsViewModel.isLoading
+                    ? Center(child: CircularProgressIndicator())
+                    : FlutterMap(
+                        options: MapOptions(
+                          center: latLng.LatLng(
+                              double.parse(post?['lat'] ?? "0.00"),
+                              double.parse(post?['long'] ?? "0.00")),
+                          zoom: 5.0,
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                        layers: [
+                          TileLayerOptions(
+                            urlTemplate:
+                                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                            subdomains: ['a', 'b', 'c'],
+                          ),
+                          MarkerLayerOptions(
+                            markers: [
+                              Marker(
+                                width: 80.0,
+                                height: 80.0,
+                                point: latLng.LatLng(
+                                    double.parse(post?['lat'] ?? "0.00"),
+                                    double.parse(post?['long'] ?? "0.00")),
+                                builder: (ctx) => Container(
+                                  child: Icon(Icons.location_on),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -162,17 +197,17 @@ class PostDetails extends StatelessWidget {
                     Column(
                       children: [
                         CircleAvatar(
-                          backgroundColor: Colors.white,
+                          backgroundColor: Colors.red,
                           radius: 20,
                           child: Icon(
-                            Icons.check_circle,
+                            Icons.close_outlined,
                             size: 40,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'Unresolved',
+                            'Resolving',
                             style: TextStyle(fontSize: 12),
                           ),
                         )
@@ -190,17 +225,17 @@ class PostDetails extends StatelessWidget {
                     Column(
                       children: [
                         CircleAvatar(
-                          backgroundColor: Colors.white,
+                          backgroundColor: Colors.red,
                           radius: 20,
                           child: Icon(
-                            Icons.check_circle,
+                            Icons.close_rounded,
                             size: 40,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('Unresolved',
-                              style: TextStyle(fontSize: 12)),
+                          child:
+                              Text('Resovled', style: TextStyle(fontSize: 12)),
                         )
                       ],
                     )

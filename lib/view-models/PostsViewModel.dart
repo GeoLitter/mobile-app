@@ -28,8 +28,10 @@ class PostsViewModel extends ChangeNotifier {
           point: markerPosition,
           builder: (ctx) => InkWell(
             onLongPress: (() {
-              Navigator.push(
-                  ctx, MaterialPageRoute(builder: (context) => PostDetails()));
+              var postIndex = _markerPositions.indexOf(markerPosition);
+              var postId = _posts![postIndex]['_id'];
+              Navigator.push(ctx,
+                  MaterialPageRoute(builder: (context) => PostDetails(postId)));
             }),
             child: Container(
               decoration: BoxDecoration(

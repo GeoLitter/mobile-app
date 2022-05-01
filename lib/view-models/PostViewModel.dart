@@ -91,7 +91,7 @@ class PostViewModel extends ChangeNotifier {
       final imageUrl = await snapshot.ref.getDownloadURL();
       print("Download Link: $imageUrl");
 
-      final Response response = await _authRepo.apiTest();
+      final Response response = await _postsRepo.createPost();
       if (response.statusCode == 200 || response.statusCode == 201) {
         print("TestAPi: $response");
         setIsPosting = false;
