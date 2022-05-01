@@ -14,8 +14,9 @@ class PostView extends StatelessWidget {
     final postViewModel = Provider.of<PostsViewModel>(context, listen: true);
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => PostDetails()));
+        var postId = postViewModel.posts[index]['_id'];
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => PostDetails(postId)));
       },
       child: Container(
           padding: EdgeInsets.all(15),

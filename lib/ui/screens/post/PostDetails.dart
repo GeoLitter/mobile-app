@@ -4,12 +4,19 @@ import 'package:flutter_map/flutter_map.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import "package:latlong/latlong.dart" as latLng;
 import 'package:mobile/ui/components/comments_bottomsheet.dart';
+import 'package:provider/provider.dart';
+
+import '../../../view-models/PostsViewModel.dart';
 
 class PostDetails extends StatelessWidget {
-  const PostDetails({Key? key}) : super(key: key);
+  final String postId;
+  const PostDetails(this.postId, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final postViewModel = Provider.of<PostsViewModel>(context, listen: true);
+    final data = postViewModel.getPostData(postId);
+    print(data);
     return Scaffold(
       appBar: AppBar(
         title: Text(

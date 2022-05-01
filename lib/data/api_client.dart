@@ -33,6 +33,7 @@ class ApiService {
       // }
       return handler.next(options);
     }, onError: (DioError error, ErrorInterceptorHandler handler) async {
+      ("INterceoptor error: $error");
       if (error.response?.statusCode == 401) {
         final refreskToken =
             await _secureLocalStorage.readSecureData('refresh_token');
@@ -111,6 +112,7 @@ class ApiService {
       // }
       return response;
     } on SocketException catch (e) {
+      print("Socket Exception: $e");
       throw e;
     } on FormatException catch (_) {
       throw FormatException("Unable to process the data");

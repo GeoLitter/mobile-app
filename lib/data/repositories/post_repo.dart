@@ -1,4 +1,6 @@
 // ignore: import_of_legacy_library_into_null_safe
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import '../api_client.dart';
 import '../services/secure_storage_service.dart';
@@ -27,7 +29,8 @@ class PostsRepo {
     String profileId = await _secureLocalStorage.readSecureData('profileId');
     print(profileId);
     return await _apiService.post('/',
-        data: {"name": "Post example", "description": "description"});
+        data: {"name": "Post example", "description": "description"},
+        options: Options(headers: {'Content-Type': 'application/json'}));
   }
 
   Future likePost(String id) async {
