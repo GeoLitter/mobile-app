@@ -3,6 +3,7 @@ import 'package:mobile/ui/screens/home/widgets/bottom_toolbar.dart';
 import 'package:mobile/ui/screens/home/widgets/map_view.dart';
 import 'package:mobile/ui/screens/home/widgets/post_view.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/ui/screens/home/widgets/top_navbar.dart';
 import 'package:mobile/view-models/HomeViewModel.dart';
 import 'package:mobile/view-models/PostsViewModel.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -26,35 +27,35 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     postViewModel.getPostData(context);
   }
 
-  Widget topNav() => SafeArea(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: IconButton(
-                  alignment: Alignment.topCenter,
-                  icon: Icon(Icons.search_outlined, color: Colors.black54),
-                  onPressed: () {},
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: IconButton(
-                  alignment: Alignment.topCenter,
-                  icon: Icon(Icons.settings, color: Colors.black54),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => UserProfile()));
-                  },
-                ),
-              )
-            ],
-          ),
-        ),
-      );
+  // Widget topNav() => SafeArea(
+  //       child: Container(
+  //         width: MediaQuery.of(context).size.width,
+  //         child: Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //           children: [
+  //             Padding(
+  //               padding: const EdgeInsets.only(left: 20),
+  //               child: IconButton(
+  //                 alignment: Alignment.topCenter,
+  //                 icon: Icon(Icons.search_outlined, color: Colors.black54),
+  //                 onPressed: () {},
+  //               ),
+  //             ),
+  //             Padding(
+  //               padding: const EdgeInsets.only(right: 20),
+  //               child: IconButton(
+  //                 alignment: Alignment.topCenter,
+  //                 icon: Icon(Icons.settings, color: Colors.black54),
+  //                 onPressed: () {
+  //                   Navigator.push(context,
+  //                       MaterialPageRoute(builder: (context) => UserProfile()));
+  //                 },
+  //               ),
+  //             )
+  //           ],
+  //         ),
+  //       ),
+  //     );
 
   Widget topSection(_tabController, context) => Container(
       height: 50.0,
@@ -134,7 +135,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         fit: StackFit.expand,
         children: <Widget>[
           //Top Nav
-          Positioned(top: 0, child: topNav()),
+          Positioned(top: 0, child: TopNavBar()),
           // Top section
           Positioned(
               width: MediaQuery.of(context).size.width,
