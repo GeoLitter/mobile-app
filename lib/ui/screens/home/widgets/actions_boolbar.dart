@@ -28,6 +28,7 @@ class ActionsToolbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final postViewModel = Provider.of<PostsViewModel>(context, listen: true);
+    final post = postViewModel.posts[index];
     return Positioned(
       bottom: 70,
       right: 0,
@@ -37,10 +38,17 @@ class ActionsToolbar extends StatelessWidget {
           _getFollowAction(context),
           _getSocialAction(
             icon: Icons.favorite,
-            title: '3.2m',
+            title: "${post['likes'].length}",
           ),
-          _getSocialAction(icon: Icons.chat_bubble, title: '16.4k'),
-          _getSocialAction(icon: Icons.share, title: 'Share', isShare: true),
+          _getSocialAction(
+            icon: Icons.chat_bubble,
+            title: "${post['comments'].length}",
+          ),
+          _getSocialAction(
+            icon: Icons.share,
+            title: 'Share',
+            isShare: true,
+          ),
         ]),
       ),
     );
@@ -49,7 +57,9 @@ class ActionsToolbar extends StatelessWidget {
   Widget _getSocialAction(
       {String? title, IconData? icon, bool isShare = false}) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        print(title);
+      },
       child: Container(
           margin: EdgeInsets.only(top: 15.0),
           width: 60.0,
