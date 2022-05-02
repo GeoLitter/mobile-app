@@ -4,11 +4,12 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import '../api_client.dart';
 import '../services/secure_storage_service.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class PostsRepo {
   late ApiService _apiService;
   final SecureLocalStorage _secureLocalStorage = SecureLocalStorage();
-  String _baseUrl = "https://polar-atoll-65466.herokuapp.com/posts";
+  String _baseUrl = "${dotenv.get('API_URL')}/posts";
 
   PostsRepo() {
     var dio = Dio();
@@ -16,6 +17,7 @@ class PostsRepo {
   }
 
   Future getPosts() async {
+    print(dotenv.get('API_URL'));
     final response = await _apiService.get('/');
     //return data model
     return response;
