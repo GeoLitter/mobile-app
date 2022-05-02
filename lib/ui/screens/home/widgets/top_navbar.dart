@@ -15,7 +15,7 @@ class TopNavBar extends StatelessWidget {
               padding: const EdgeInsets.only(left: 20),
               child: IconButton(
                 alignment: Alignment.topCenter,
-                icon: Icon(Icons.search_outlined, color: Colors.black54),
+                icon: Icon(Icons.search_outlined, color: Colors.black),
                 onPressed: () {},
               ),
             ),
@@ -23,7 +23,7 @@ class TopNavBar extends StatelessWidget {
               padding: const EdgeInsets.only(right: 20),
               child: IconButton(
                 alignment: Alignment.topCenter,
-                icon: Icon(Icons.settings, color: Colors.black54),
+                icon: Icon(Icons.settings, color: Colors.black),
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => UserProfile()));
