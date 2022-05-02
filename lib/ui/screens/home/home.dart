@@ -63,6 +63,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   ? 160
                   : 0),
           child: TabBarView(
+            physics: !Provider.of<HomeViewModel>(context, listen: true).isMap
+                ? NeverScrollableScrollPhysics()
+                : null,
             controller: _tabController,
             children: [
               Provider.of<HomeViewModel>(context, listen: true).isMap
