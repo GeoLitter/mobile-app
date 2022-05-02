@@ -55,13 +55,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   Widget topSection(_tabController, context) => Container(
       height: 50.0,
-      width: 300,
-      alignment: Alignment(0.0, 0.0),
       child: TabBar(
         controller: _tabController,
         // give the indicator a decoration (color and border radius)
         indicator: BoxDecoration(
-          border: Border(bottom: BorderSide(width: 2.0, color: Colors.blue)),
+          border: Border(bottom: BorderSide(width: 1.5, color: Colors.blue)),
         ),
         labelColor: Colors.blue,
         unselectedLabelColor: Colors.black54,
@@ -85,41 +83,42 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               context,
               listen: true)
           .isLoading
-      ? Positioned(
-          top: 150,
-          child: Container(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                Provider.of<HomeViewModel>(context, listen: true).isMap
-                    ? ListView.builder(
-                        itemCount:
-                            Provider.of<PostsViewModel>(context, listen: true)
-                                .posts
-                                ?.length,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        // Stack(children: <Widget>[PostView(), ActionsToolbar()])
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                              height: MediaQuery.of(context).size.height * .75,
-                              child: Stack(children: <Widget>[
-                                PostView(index),
-                                ActionsToolbar(index)
-                              ]));
-                        })
-                    : MapView(),
-                Provider.of<HomeViewModel>(context, listen: true).isMap
-                    ? Container(
-                        height: MediaQuery.of(context).size.height * 0.75,
-                        child: Text("Hello"))
-                    : MapView(),
-                Provider.of<HomeViewModel>(context, listen: true).isMap
-                    ? Container(
-                        height: MediaQuery.of(context).size.height * 0.75,
-                        child: Text("Hello"))
-                    : MapView(),
-              ],
-            ),
+      ? Container(
+          margin: EdgeInsets.only(
+              top: Provider.of<HomeViewModel>(context, listen: true).isMap
+                  ? 160
+                  : 0),
+          child: TabBarView(
+            controller: _tabController,
+            children: [
+              Provider.of<HomeViewModel>(context, listen: true).isMap
+                  ? ListView.builder(
+                      itemCount:
+                          Provider.of<PostsViewModel>(context, listen: true)
+                              .posts
+                              ?.length,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      // Stack(children: <Widget>[PostView(), ActionsToolbar()])
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                            height: MediaQuery.of(context).size.height * .75,
+                            child: Stack(children: <Widget>[
+                              PostView(index),
+                              ActionsToolbar(index)
+                            ]));
+                      })
+                  : MapView(),
+              Provider.of<HomeViewModel>(context, listen: true).isMap
+                  ? Container(
+                      height: MediaQuery.of(context).size.height * 0.75,
+                      child: Text("Hello"))
+                  : MapView(),
+              Provider.of<HomeViewModel>(context, listen: true).isMap
+                  ? Container(
+                      height: MediaQuery.of(context).size.height * 0.75,
+                      child: Text("Hello"))
+                  : MapView(),
+            ],
           ),
         )
       : Align(alignment: Alignment.center, child: CircularProgressIndicator());
@@ -135,7 +134,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           Align(alignment: Alignment.topCenter, child: topNav()),
           // Top section
           Positioned(
-              width: MediaQuery.of(context).size.width * 0.75,
+              width: MediaQuery.of(context).size.width,
               top: 100,
               child: topSection(_tabController, context)),
           // Middle expanded
