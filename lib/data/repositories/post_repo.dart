@@ -1,6 +1,4 @@
 // ignore: import_of_legacy_library_into_null_safe
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import '../api_client.dart';
 import '../services/secure_storage_service.dart';
@@ -17,7 +15,6 @@ class PostsRepo {
   }
 
   Future getPosts() async {
-    print(dotenv.get('API_URL'));
     final response = await _apiService.get('/');
     //return data model
     return response;
