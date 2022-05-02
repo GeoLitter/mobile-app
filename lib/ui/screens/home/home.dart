@@ -27,29 +27,32 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   Widget topNav() => SafeArea(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: IconButton(
-                alignment: Alignment.topCenter,
-                icon: Icon(Icons.search_outlined, color: Colors.black54),
-                onPressed: () {},
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: IconButton(
+                  alignment: Alignment.topCenter,
+                  icon: Icon(Icons.search_outlined, color: Colors.black54),
+                  onPressed: () {},
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: IconButton(
-                alignment: Alignment.topCenter,
-                icon: Icon(Icons.settings, color: Colors.black54),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => UserProfile()));
-                },
-              ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: IconButton(
+                  alignment: Alignment.topCenter,
+                  icon: Icon(Icons.settings, color: Colors.black54),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => UserProfile()));
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       );
 
@@ -131,7 +134,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         fit: StackFit.expand,
         children: <Widget>[
           //Top Nav
-          Align(alignment: Alignment.topCenter, child: topNav()),
+          Positioned(top: 0, child: topNav()),
           // Top section
           Positioned(
               width: MediaQuery.of(context).size.width,
