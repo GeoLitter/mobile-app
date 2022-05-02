@@ -1,4 +1,5 @@
 // ignore: import_of_legacy_library_into_null_safe
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/ui/screens/user/UserDetails.dart';
@@ -29,6 +30,7 @@ class ActionsToolbar extends StatelessWidget {
   Widget build(BuildContext context) {
     final postViewModel = Provider.of<PostsViewModel>(context, listen: true);
     final post = postViewModel.posts[index];
+
     return Positioned(
       bottom: 70,
       right: 0,
@@ -37,14 +39,19 @@ class ActionsToolbar extends StatelessWidget {
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           _getFollowAction(context),
           _getSocialAction(
+            context,
             icon: Icons.favorite,
             title: "${post['likes'].length}",
+            postId: "${post['_id']}",
+            action: "likePost",
           ),
           _getSocialAction(
+            context,
             icon: Icons.chat_bubble,
             title: "${post['comments'].length}",
           ),
           _getSocialAction(
+            context,
             icon: Icons.share,
             title: 'Share',
             isShare: true,
@@ -54,11 +61,21 @@ class ActionsToolbar extends StatelessWidget {
     );
   }
 
-  Widget _getSocialAction(
-      {String? title, IconData? icon, bool isShare = false}) {
+  Future handleAction(context, String currentPostId, String action) async {
+    if (action == "likePost")
+      return await PostsViewModel().likePost(context, currentPostId);
+  }
+
+  Widget _getSocialAction(BuildContext context,
+      {String? title,
+      IconData? icon,
+      bool isShare = false,
+      String? postId,
+      String? action}) {
     return InkWell(
       onTap: () {
-        print(title);
+        print("PostID: $postId");
+        handleAction(context, postId!, "likePost");
       },
       child: Container(
           margin: EdgeInsets.only(top: 15.0),

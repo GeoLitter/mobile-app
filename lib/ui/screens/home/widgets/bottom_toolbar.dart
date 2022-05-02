@@ -9,8 +9,7 @@ class BottomToolbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context, listen: true);
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+    return SafeArea(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
