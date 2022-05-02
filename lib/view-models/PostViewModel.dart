@@ -91,7 +91,13 @@ class PostViewModel extends ChangeNotifier {
       final imageUrl = await snapshot.ref.getDownloadURL();
       print("Download Link: $imageUrl");
 
-      final Response response = await _postsRepo.createPost();
+      Response response = await _postsRepo.createPost(
+          "Post from View Model",
+          "Description from View Model",
+          "21.9483",
+          "120.7798",
+          imageUrl,
+          {"_id": " test"});
       if (response.statusCode == 200 || response.statusCode == 201) {
         print("TestAPi: $response");
         setIsPosting = false;
@@ -107,6 +113,19 @@ class PostViewModel extends ChangeNotifier {
       setIsPosting = false;
       setIsUploading = false;
       Navigator.pop(context);
+      displayAlertModal(context, error.response?.data['message']);
+      throw error;
+    }
+  }
+
+  Future likePost(context, String postId) async {
+    try {
+      Response response = await _postsRepo.likePost(postId);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return response;
+      }
+    } on DioError catch (error) {
+      print("Error: $error");
       displayAlertModal(context, error.response?.data['message']);
       throw error;
     }

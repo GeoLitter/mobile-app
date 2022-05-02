@@ -3,6 +3,7 @@ import 'package:mobile/ui/screens/home/widgets/bottom_toolbar.dart';
 import 'package:mobile/ui/screens/home/widgets/map_view.dart';
 import 'package:mobile/ui/screens/home/widgets/post_view.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/ui/screens/home/widgets/top_navbar.dart';
 import 'package:mobile/view-models/HomeViewModel.dart';
 import 'package:mobile/view-models/PostsViewModel.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -26,43 +27,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     postViewModel.getPostData(context);
   }
 
-  Widget topNav() => Container(
-        margin: EdgeInsets.only(top: 35),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: IconButton(
-                alignment: Alignment.topCenter,
-                icon: Icon(Icons.search_outlined, color: Colors.black54),
-                onPressed: () {},
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: IconButton(
-                alignment: Alignment.topCenter,
-                icon: Icon(Icons.settings, color: Colors.black54),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => UserProfile()));
-                },
-              ),
-            )
-          ],
-        ),
-      );
-
   Widget topSection(_tabController, context) => Container(
       height: 50.0,
-      width: 300,
-      alignment: Alignment(0.0, 0.0),
       child: TabBar(
         controller: _tabController,
         // give the indicator a decoration (color and border radius)
         indicator: BoxDecoration(
-          border: Border(bottom: BorderSide(width: 2.0, color: Colors.blue)),
+          border: Border(bottom: BorderSide(width: 1.5, color: Colors.blue)),
         ),
         labelColor: Colors.blue,
         unselectedLabelColor: Colors.black54,
@@ -82,62 +53,76 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         ],
       ));
 
-  Widget middleSection(_tabController, context) => Expanded(
-        child: Provider.of<PostsViewModel>(context, listen: true).isLoading
-            ? Container(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    Provider.of<HomeViewModel>(context, listen: true).isMap
-                        ? ListView.builder(
-                            itemCount: Provider.of<PostsViewModel>(context,
-                                    listen: true)
-                                .posts
-                                ?.length,
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            // Stack(children: <Widget>[PostView(), ActionsToolbar()])
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.75,
-                                  child: Stack(children: <Widget>[
-                                    PostView(index),
-                                    ActionsToolbar(index)
-                                  ]));
-                            })
-                        : MapView(),
-                    Provider.of<HomeViewModel>(context, listen: true).isMap
-                        ? Container(
-                            height: MediaQuery.of(context).size.height * 0.75,
-                            child: Text("Hello"))
-                        : MapView(),
-                    Provider.of<HomeViewModel>(context, listen: true).isMap
-                        ? Container(
-                            height: MediaQuery.of(context).size.height * 0.75,
-                            child: Text("Hello"))
-                        : MapView(),
-                  ],
-                ),
-              )
-            : Text("Loading..."),
-      );
+  Widget middleSection(_tabController, context) => Provider.of<PostsViewModel>(
+              context,
+              listen: true)
+          .isLoading
+      ? Container(
+          margin: EdgeInsets.only(
+              top: Provider.of<HomeViewModel>(context, listen: true).isMap
+                  ? 160
+                  : 0),
+          child: TabBarView(
+            physics: !Provider.of<HomeViewModel>(context, listen: true).isMap
+                ? NeverScrollableScrollPhysics()
+                : null,
+            controller: _tabController,
+            children: [
+              Provider.of<HomeViewModel>(context, listen: true).isMap
+                  ? ListView.builder(
+                      itemCount:
+                          Provider.of<PostsViewModel>(context, listen: true)
+                              .posts
+                              ?.length,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      // Stack(children: <Widget>[PostView(), ActionsToolbar()])
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                            height: MediaQuery.of(context).size.height * .75,
+                            child: Stack(children: <Widget>[
+                              PostView(index),
+                              ActionsToolbar(index)
+                            ]));
+                      })
+                  : MapView(),
+              Provider.of<HomeViewModel>(context, listen: true).isMap
+                  ? Container(
+                      height: MediaQuery.of(context).size.height * 0.75,
+                      child: Text("Hello"))
+                  : MapView(),
+              Provider.of<HomeViewModel>(context, listen: true).isMap
+                  ? Container(
+                      height: MediaQuery.of(context).size.height * 0.75,
+                      child: Text("Hello"))
+                  : MapView(),
+            ],
+          ),
+        )
+      : Align(alignment: Alignment.center, child: CircularProgressIndicator());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+      body: Stack(
+        fit: StackFit.expand,
         children: <Widget>[
-          //Top Nav
-          topNav(),
-          // Top section
-          topSection(_tabController, context),
+          //must be place onTop so other widget can overlap the map and post
           // Middle expanded
           middleSection(_tabController, context),
+          //Top Nav
+          Positioned(top: 0, child: TopNavBar()),
+          // Top section
+          Positioned(
+              width: MediaQuery.of(context).size.width,
+              top: 100,
+              child: topSection(_tabController, context)),
 
           // Bottom Section
-          BottomToolbar(),
+          Positioned(
+              width: MediaQuery.of(context).size.width,
+              bottom: 0,
+              child: BottomToolbar()),
         ],
       ),
     );

@@ -80,9 +80,9 @@ class PostsViewModel extends ChangeNotifier {
     }
   }
 
-  Future likePost(context) async {
+  Future likePost(context, String postId) async {
     try {
-      Response response = await _postsRepo.likePost("");
+      Response response = await _postsRepo.likePost(postId);
       if (response.statusCode == 200 || response.statusCode == 201) {
         print("Post liked");
       }

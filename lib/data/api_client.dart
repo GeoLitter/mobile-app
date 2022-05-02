@@ -42,7 +42,8 @@ class ApiService {
           return handler.resolve(await _retry(error.requestOptions));
         }
       }
-      throw error;
+      return handler.reject(error);
+      // throw error;
     }));
   }
 
@@ -98,6 +99,41 @@ class ApiService {
   }) async {
     try {
       var response = await _dio.post(
+        uri,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      );
+      //add as interceoptor instead
+      // if(response.statusCode == 401 && _secureLocalStorage.readSecureData('refresh_token') != null){
+      //    await onRefreshToken();
+      // }
+      return response;
+    } on SocketException catch (e) {
+      print("Socket Exception: $e");
+      throw e;
+    } on FormatException catch (_) {
+      throw FormatException("Unable to process the data");
+    } catch (e) {
+      print("Error: $e");
+      throw e;
+    }
+  }
+
+  Future<dynamic> put(
+    String uri, {
+    data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    try {
+      var response = await _dio.put(
         uri,
         data: data,
         queryParameters: queryParameters,

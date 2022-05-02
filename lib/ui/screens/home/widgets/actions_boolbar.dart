@@ -1,4 +1,5 @@
 // ignore: import_of_legacy_library_into_null_safe
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/ui/screens/user/UserDetails.dart';
@@ -28,6 +29,8 @@ class ActionsToolbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final postViewModel = Provider.of<PostsViewModel>(context, listen: true);
+    final post = postViewModel.posts[index];
+
     return Positioned(
       bottom: 70,
       right: 0,
@@ -36,20 +39,44 @@ class ActionsToolbar extends StatelessWidget {
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           _getFollowAction(context),
           _getSocialAction(
+            context,
             icon: Icons.favorite,
-            title: '3.2m',
+            title: "${post['likes'].length}",
+            postId: "${post['_id']}",
+            action: "likePost",
           ),
-          _getSocialAction(icon: Icons.chat_bubble, title: '16.4k'),
-          _getSocialAction(icon: Icons.share, title: 'Share', isShare: true),
+          _getSocialAction(
+            context,
+            icon: Icons.chat_bubble,
+            title: "${post['comments'].length}",
+          ),
+          _getSocialAction(
+            context,
+            icon: Icons.share,
+            title: 'Share',
+            isShare: true,
+          ),
         ]),
       ),
     );
   }
 
-  Widget _getSocialAction(
-      {String? title, IconData? icon, bool isShare = false}) {
+  Future handleAction(context, String currentPostId, String action) async {
+    if (action == "likePost")
+      return await PostsViewModel().likePost(context, currentPostId);
+  }
+
+  Widget _getSocialAction(BuildContext context,
+      {String? title,
+      IconData? icon,
+      bool isShare = false,
+      String? postId,
+      String? action}) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        print("PostID: $postId");
+        handleAction(context, postId!, "likePost");
+      },
       child: Container(
           margin: EdgeInsets.only(top: 15.0),
           width: 60.0,

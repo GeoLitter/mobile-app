@@ -195,8 +195,8 @@ class CreatePost extends StatelessWidget {
                       onPressed: !postViewModel.canSubmit()
                           ? null
                           : () async {
-                              postViewModel.createPost(context);
                               displayLoadingModal(context, "Upload Status");
+                              await postViewModel.createPost(context);
                             },
                       child: Text("Submit"),
                     ),
