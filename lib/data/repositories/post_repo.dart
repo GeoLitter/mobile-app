@@ -1,4 +1,6 @@
 // ignore: import_of_legacy_library_into_null_safe
+import 'dart:ffi';
+
 import 'package:dio/dio.dart';
 import '../api_client.dart';
 import '../services/secure_storage_service.dart';
@@ -24,12 +26,22 @@ class PostsRepo {
     return await _apiService.get('/$id');
   }
 
-  Future createPost() async {
+  Future createPost(String title, String description, String lat, String long,
+      String postImage, Map<String, String> tags) async {
     String profileId = await _secureLocalStorage.readSecureData('profileId');
     print(profileId);
     final response = await _apiService.post('/',
-        data: {"name": "Post example", "description": "description"},
+        data: {
+          "name": title,
+          "description": description,
+          "lat": lat,
+          "long": long,
+          "postImage": postImage,
+          "tags": tags,
+          "profile": profileId
+        },
         options: Options(headers: {'Content-Type': 'application/json'}));
+    print("Resposne: $response");
     return response;
   }
 
