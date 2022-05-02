@@ -104,6 +104,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
+          //must be place onTop so other widget can overlap the map and post
+          // Middle expanded
+          middleSection(_tabController, context),
           //Top Nav
           Positioned(top: 0, child: TopNavBar()),
           // Top section
@@ -111,8 +114,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               width: MediaQuery.of(context).size.width,
               top: 100,
               child: topSection(_tabController, context)),
-          // Middle expanded
-          middleSection(_tabController, context),
 
           // Bottom Section
           Positioned(
