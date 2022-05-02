@@ -27,12 +27,13 @@ class PostsRepo {
   Future createPost() async {
     String profileId = await _secureLocalStorage.readSecureData('profileId');
     print(profileId);
-    return await _apiService.post('/',
+    final response = await _apiService.post('/',
         data: {"name": "Post example", "description": "description"},
         options: Options(headers: {'Content-Type': 'application/json'}));
+    return response;
   }
 
   Future likePost(String id) async {
-    await _apiService.post('/like/$id');
+    await _apiService.put('/like/$id');
   }
 }
